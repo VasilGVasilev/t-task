@@ -2,7 +2,7 @@
 
 ### Data Approach
 
-![alt img]()
+![alt img](https://github.com/VasilGVasilev/t-task/blob/main/data-architecture.png)
 
 ### What's in the Stack
 
