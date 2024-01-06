@@ -1,10 +1,10 @@
 # t-task
 
-### Data Approach
+## Data Approach
 
 ![alt img](https://github.com/VasilGVasilev/t-task/blob/main/data-architecture.png)
 
-### What's in the Stack
+## What's in the Stack
 
 - Vite
 - React
@@ -14,8 +14,15 @@
 - Cypress
 
 
-### Todos
+## Todos
 
+### Setup
+- [X] Choose framework
+- [ ] Config Tailwind + react-router-dom to make it SPA
+
+
+
+### App logic
 - [ ] Fetch data and store it in state
 - [ ] Create basic index page - map and list divs
 - [ ] Add leaflet for map div of main page
