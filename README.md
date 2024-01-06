@@ -6,7 +6,7 @@
 
 ### What's in the Stack
 
-- Next.js
+- Vite
 - React
 - Tailwind
 - Redux
