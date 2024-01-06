@@ -19,6 +19,8 @@
 ### Setup
 - [X] Choose framework
 - [ ] Config Tailwind + react-router-dom to make it SPA
+- [ ] Config Redux
+
 
 
 
