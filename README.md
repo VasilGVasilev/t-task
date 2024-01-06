@@ -17,8 +17,9 @@
 ## Todos
 
 ### Setup
-- [X] Choose framework
-- [ ] Config Tailwind + react-router-dom to make it SPA
+- [X] Choose framework -> Vite
+- [X] Config Tailwind
+- [ ] Config react-router-dom -> to make it SPA
 - [ ] Config Redux
 
 
