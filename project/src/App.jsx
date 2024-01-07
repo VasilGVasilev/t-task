@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./pages/Layout";
-import Home from "./pages/Home";
-import NoPage from "./pages/NoPage";
-import A111 from "./pages/A111";
-import A11 from "./pages/A11";
-import TB11 from "./pages/TB11";
-import TM8 from "./pages/TM8";
-import TM10 from "./pages/TM10";
+import Layout from "../pages/Layout";
+import Home from "../pages/Home";
+import NoPage from "../pages/NoPage";
+import A111 from "../pages/A111";
+import A11 from "../pages/A11";
+import TB11 from "../pages/TB11";
+import TM8 from "../pages/TM8";
+import TM10 from "../pages/TM10";
 
 
 

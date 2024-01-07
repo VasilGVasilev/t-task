@@ -9,6 +9,8 @@
 - Vite
 - React
 - Tailwind
+- react/icons
+- framer-motion
 - Redux
 - Leaflet
 - Cypress
