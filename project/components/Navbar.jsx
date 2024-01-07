@@ -25,6 +25,7 @@ const navbarVariant = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: { opacity: 1, scale: 1 },
 };
+
 const LinkMobileTemplate = ({ urlLink, page, setIsMenuToggled }) => {
     const location = useLocation()
 
@@ -32,7 +33,7 @@ const LinkMobileTemplate = ({ urlLink, page, setIsMenuToggled }) => {
         <Link
             to={urlLink}
             className={`${location.pathname === urlLink ? "text-[#00BAFC]" : "text-[#142D55]"
-                }  transition duration-300`}
+                }  transition duration-300 `}
             onClick={() => {
                 setIsMenuToggled(false);
             }
@@ -51,7 +52,7 @@ const LinkTemplate = ({ urlLink, page }) => {
         <Link
             to={urlLink}
             className={`${location.pathname == urlLink ? "text-[#00BAFC]" : "text-[#142D55]"
-                }  transition duration-300`}
+                }  transition duration-300 hover:text-white`}
         >
             {page}
         </Link>
@@ -74,18 +75,13 @@ const Navbar = () => {
     }
 
     return (
-        // animation works only on Home page:
-        // the Navbar is fixed, meaning when we start the page, it is hidden and scroll makes it appear
-        // but also if we refresh down the Home page, due to Navbar also being fixed to viewport, it will appear since being fixed makes it also constanlty inView
-        <div
-        >
-            <nav className={`bg-[#166534] flex flex-col z-40 w-full fixed top-0 shadow-xl`} >
+            <nav className={`bg-[#166534] flex flex-col z-40 w-full shadow-xl`} >
 
                 <div className="flex items-center justify-between mx-auto w-5/6">
 
                     <Link className='saturate-200 duration-200 flex justify-center items-center h-14 w-20 sm:h-20 sm:w-32 text-xl 2xl:text-2xl text-black font-bold' to={'/'}>
 
-                            <img src="cgm.png" className="h-10 w-10 sm:h-16 sm:w-16 shadow-2xl rounded-full hover:scale-110 transition duration-300" alt="" />
+                            <img src="cgm.png" className=" h-10 w-10 sm:h-16 sm:w-16 rounded-full hover:scale-110 transition duration-300" alt="" />
 
 
 
@@ -221,7 +217,6 @@ const Navbar = () => {
                     )}
                 </div>
             </nav>
-        </div>
     );
 };
 
