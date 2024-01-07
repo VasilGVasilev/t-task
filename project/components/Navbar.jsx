@@ -57,8 +57,8 @@ const LinkTemplate = ({ urlLink, page }) => {
     return (
         <Link
             to={urlLink}
-            className={`${location.pathname == urlLink ? "text-[#00BAFC]" : "text-[#142D55]"
-                }  transition duration-300 hover:text-white`}
+            className={`${location.pathname == urlLink ? "text-[#142D55]" : "text-white"
+                }  transition duration-300 hover:text-[#00BAFC]`}
         >
             {page}
         </Link>
@@ -81,7 +81,7 @@ const Navbar = () => {
     }
 
     return (
-        <nav className={`bg-[#166534] flex flex-col z-40 w-full shadow-xl`} >
+        <nav className={` bg-gradient-to-t from-[#166534] to-[#166534b6] flex flex-col z-40 w-full shadow-xl`} >
 
             <div className="flex items-center justify-between mx-auto w-5/6">
 
