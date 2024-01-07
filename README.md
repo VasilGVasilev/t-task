@@ -19,7 +19,7 @@
 ### Setup
 - [X] Choose framework -> Vite
 - [X] Config Tailwind
-- [ ] Config react-router-dom -> to make it CSR
+- [X] Config react-router-dom -> to make it CSR
 - [ ] Config Redux
 
 
