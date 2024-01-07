@@ -18,4 +18,5 @@ I have had tried two solutions:
 2. rely on 'window.addEventListener("resize", listener)' that constantly checks for resizing
 We will apply the custom hook 2.
 
-    - one smaller problem I incurred during Navbar Development -> being used to Next.js ready to use Tailwind setup, I did not configure my possible extensions (missed the jsx) and my Tailwind did not work.
+    - [Config Tailwind] one smaller problem I incurred during Navbar Development -> being used to Next.js ready to use Tailwind setup, I did not configure my possible extensions (missed the jsx) and my Tailwind did not work.
+    - [Tailwind generates its styles at build time] in Navbar -> LinkMobileTemplate, I tried to set the color of an element via dynamically passed prop and the problem is that Tailwind generates the style at build time, while the dynamic props are determined at runtime, thus, Tailwind does not know of the dynamic props' values at build time. Solution is to style the css directly, not via Tailwind.

@@ -26,23 +26,29 @@ const navbarVariant = {
     visible: { opacity: 1, scale: 1 },
 };
 
-const LinkMobileTemplate = ({ urlLink, page, setIsMenuToggled }) => {
+const LinkMobileTemplate = ({ urlLink, page, setIsMenuToggled, lineColor }) => {
     const location = useLocation()
 
     return (
-        <Link
-            to={urlLink}
-            className={`${location.pathname === urlLink ? "text-[#00BAFC]" : "text-[#142D55]"
-                }  transition duration-300 `}
-            onClick={() => {
-                setIsMenuToggled(false);
-            }
-            }
+        <motion.div
+            variants={navbarVariant}
+            viewport={{ once: true }}
+            style={{"backgroundColor": lineColor}}
+            className="p-2"
         >
+            <Link
+                to={urlLink}
+                className={`${location.pathname === urlLink ? "text-white font-extrabold" : "text-black"
+                    }  transition duration-300 `}
+                onClick={() => {
+                    setIsMenuToggled(false);
+                }
+                }
+            >
 
-            {page}
-        </Link>
-
+                {page}
+            </Link>
+        </motion.div>
     );
 };
 
@@ -75,148 +81,135 @@ const Navbar = () => {
     }
 
     return (
-            <nav className={`bg-[#166534] flex flex-col z-40 w-full shadow-xl`} >
+        <nav className={`bg-[#166534] flex flex-col z-40 w-full shadow-xl`} >
 
-                <div className="flex items-center justify-between mx-auto w-5/6">
+            <div className="flex items-center justify-between mx-auto w-5/6">
 
-                    <Link className='saturate-200 duration-200 flex justify-center items-center h-14 w-20 sm:h-20 sm:w-32 text-xl 2xl:text-2xl text-black font-bold' to={'/'}>
+                <Link className='saturate-200 duration-200 flex justify-center items-center h-14 w-20 sm:h-20 sm:w-32 text-xl 2xl:text-2xl text-black font-bold' to={'/'}>
 
-                            <img src="cgm.png" className=" h-10 w-10 sm:h-16 sm:w-16 rounded-full hover:scale-110 transition duration-300" alt="" />
+                    <img src="cgm.png" className=" h-10 w-10 sm:h-16 sm:w-16 rounded-full hover:scale-110 transition duration-300" alt="" />
 
 
 
-                    </Link>
-                    {/* DESKTOP NAV */}
-                    {isDesktop ? (
-                        <div className={`text-xl 2xl:text-2xl flex justify-between gap-10 2xl:gap-16 text-black font-bold`}>
+                </Link>
+                {/* DESKTOP NAV */}
+                {isDesktop ? (
+                    <div className={`text-xl 2xl:text-2xl flex justify-between gap-10 2xl:gap-16 font-bold`}>
 
-                            <LinkTemplate
-                                urlLink='/A11'
-                                page="A11"
-                            />
-                            <LinkTemplate
-                                urlLink='/A111'
-                                page="A111"
-                            />
-                            <LinkTemplate
-                                urlLink='/TB11'
-                                page="TB11"
-                            />
-                            <LinkTemplate
-                                urlLink='/TM8'
-                                page="TM8"
-                            />
-                            <LinkTemplate
-                                urlLink='/TM10'
-                                page="TM10"
-                            />
-                        </div>
-                    ) : (
-                        <button
-                            className="rounded-full text-black p-2"
-                            onClick={() => setIsMenuToggled(!isMenuToggled)}
-                            aria-label="menu"
+                        <LinkTemplate
+                            urlLink='/A11'
+                            page="A11"
+                        />
+                        <LinkTemplate
+                            urlLink='/A111'
+                            page="A111"
+                        />
+                        <LinkTemplate
+                            urlLink='/TB11'
+                            page="TB11"
+                        />
+                        <LinkTemplate
+                            urlLink='/TM8'
+                            page="TM8"
+                        />
+                        <LinkTemplate
+                            urlLink='/TM10'
+                            page="TM10"
+                        />
+                    </div>
+                ) : (
+                    <button
+                        className="rounded-full text-black p-2"
+                        onClick={() => setIsMenuToggled(!isMenuToggled)}
+                        aria-label="menu"
+                    >
+                        <GiHamburgerMenu size={24} />
+                    </button>
+                )}
+
+                {/* MOBILE MENU POPUP */}
+                {!isDesktop && isMenuToggled && (
+                    <div
+                        className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-80"
+                        onClick={closeModal}
+                        ref={modalRef}
+                    >
+                        <motion.div
+                            className="fixed right-0 bottom-0 h-full bg-[#052e16] w-[340px]"
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.1 }}
+                            transition={{ duration: 0.3 }}
+                            variants={{
+                                hidden: { opacity: 0, x: 50 },
+                                visible: { opacity: 1, x: 0 },
+                            }}
                         >
-                            <GiHamburgerMenu size={24} />
-                        </button>
-                    )}
+                            {/* CLOSE ICON */}
+                            <div className="flex justify-end p-12">
+                                <button
+                                    onClick={() => setIsMenuToggled(!isMenuToggled)}
+                                    aria-label="close"
+                                >
+                                    <AiOutlineClose size={24} className="text-neutral-600" />
+                                </button>
+                            </div>
 
-                    {/* MOBILE MENU POPUP */}
-                    {!isDesktop && isMenuToggled && (
-                        <div
-                            className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-80"
-                            onClick={closeModal}
-                            ref={modalRef}
-                        >
+                            {/* MENU ITEMS */}
                             <motion.div
-                                className="fixed right-0 bottom-0 h-full bg-black w-[300px]"
+                                className="flex flex-col gap-10 ml-[33%] text-2xl text-white"
+                                variants={container}
                                 initial="hidden"
                                 whileInView="visible"
-                                viewport={{ once: true, amount: 0.1 }}
-                                transition={{ duration: 0.3 }}
-                                variants={{
-                                    hidden: { opacity: 0, x: 50 },
-                                    visible: { opacity: 1, x: 0 },
-                                }}
+                                viewport={{ once: true, amount: 0.2 }}
                             >
-                                {/* CLOSE ICON */}
-                                <div className="flex justify-end p-12">
-                                    <button
-                                        onClick={() => setIsMenuToggled(!isMenuToggled)}
-                                        aria-label="close"
-                                    >
-                                        <AiOutlineClose size={24} className="text-neutral-600" />
-                                    </button>
-                                </div>
 
-                                {/* MENU ITEMS */}
-                                <motion.div
-                                    className="flex flex-col gap-10 ml-[33%] text-2xl text-white"
-                                    variants={container}
-                                    initial="hidden"
-                                    whileInView="visible"
-                                    viewport={{ once: true, amount: 0.2 }}
-                                >
 
-                                    <motion.div
-                                        variants={navbarVariant}
-                                        viewport={{ once: true }}
-                                    >
-                                        <LinkMobileTemplate
-                                            urlLink='/A11'
-                                            page="A11"
-                                            setIsMenuToggled={setIsMenuToggled}
-                                        />
-                                    </motion.div>
-                                    <motion.div
-                                        variants={navbarVariant}
-                                        viewport={{ once: true }}
-                                    >
-                                        <LinkMobileTemplate
-                                            urlLink='/A111'
-                                            page="A111"
-                                            setIsMenuToggled={setIsMenuToggled}
-                                        />
-                                    </motion.div>
-                                    <motion.div
-                                        variants={navbarVariant}
-                                        viewport={{ once: true }}
-                                    >
+                                    <LinkMobileTemplate
+                                        urlLink='/A11'
+                                        page="A11"
+                                        setIsMenuToggled={setIsMenuToggled}
+                                        lineColor={'#ca8a04'}
+                                    />
 
-                                        <LinkMobileTemplate
-                                            urlLink='/TB11'
-                                            page="TB11"
-                                            setIsMenuToggled={setIsMenuToggled}
-                                        />
-                                    </motion.div>
-                                    <motion.div
-                                        variants={navbarVariant}
-                                        viewport={{ once: true }}
-                                    >
 
-                                        <LinkMobileTemplate
-                                            urlLink='/TM8'
-                                            page="TM8"
-                                            setIsMenuToggled={setIsMenuToggled}
-                                        />
-                                    </motion.div>
-                                    <motion.div
-                                        variants={navbarVariant}
-                                        viewport={{ once: true }}
-                                    >
+                                    <LinkMobileTemplate
+                                        urlLink='/A111'
+                                        page="A111"
+                                        setIsMenuToggled={setIsMenuToggled}
+                                        lineColor="#dc2626"
+                                    />
 
-                                        <LinkMobileTemplate
-                                            urlLink='/TM10'
-                                            page="TM10"
-                                            setIsMenuToggled={setIsMenuToggled}
-                                        />
-                                    </motion.div>
-                                </motion.div>
+                                    <LinkMobileTemplate
+                                        urlLink='/TB11'
+                                        page="TB11"
+                                        setIsMenuToggled={setIsMenuToggled}
+                                        lineColor="#ea580c"
+
+                                    />
+
+
+                                    <LinkMobileTemplate
+                                        urlLink='/TM8'
+                                        page="TM8"
+                                        setIsMenuToggled={setIsMenuToggled}
+                                        lineColor="#6b21a8"
+
+                                    />
+ 
+
+                                    <LinkMobileTemplate
+                                        urlLink='/TM10'
+                                        page="TM10"
+                                        setIsMenuToggled={setIsMenuToggled}
+                                        lineColor="#4b5563"
+                                    />
                             </motion.div>
-                        </div>
-                    )}
-                </div>
-            </nav>
+                        </motion.div>
+                    </div>
+                )}
+            </div>
+        </nav>
     );
 };
 
