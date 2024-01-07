@@ -20,3 +20,6 @@ We will apply the custom hook 2.
 
     - [Config Tailwind] one smaller problem I incurred during Navbar Development -> being used to Next.js ready to use Tailwind setup, I did not configure my possible extensions (missed the jsx) and my Tailwind did not work.
     - [Tailwind generates its styles at build time] in Navbar -> LinkMobileTemplate, I tried to set the color of an element via dynamically passed prop and the problem is that Tailwind generates the style at build time, while the dynamic props are determined at runtime, thus, Tailwind does not know of the dynamic props' values at build time. Solution is to style the css directly, not via Tailwind.
+
+- [navigate vs redirect] Leaflet does not work with redirect which is used for actions/loaders, but works with [navigate](https://stackoverflow.com/questions/74413650/what-is-difference-between-usenavigate-and-redirect-in-react-route-v6). My goal was to trigger a redirection to the line's route on click of that very line. 
+- [leaflet Events] To manipulate events use hooks like useMapEvent() if you want to manipulate the actual children components of MapContainer -> see eventHandlers.
