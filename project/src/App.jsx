@@ -10,34 +10,21 @@ import TM8 from "../pages/TM8";
 import TM10 from "../pages/TM10";
 
 import data from '../../DB/data.json'
+import colorOptions from '../../DB/colorOptions.json'
 import { useState } from "react";
-
-// MOCK FETCHING
-// import { useQuery } from "react-query";
-// import axios from 'axios';
-
-// MOCK FETCHING
-// const retrieveData = (url) => {
-//   const response = await axios.get(url);
-//   return response.data;
-// };
 
 
 
 function App() {
   const [transportData, setTransportData] = useState(data);
-  
-  // MOCK FETCHING
-      // const { data: data, error, isLoading } = useQuery("postsData", retrieveData(url));
-      // if (isLoading) return <div>Fetching data...</div>;
-      // if (error) return <div>An error occurred: {error.message}</div>;
+  const [colors, setColors] = useState(colorOptions);
 
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home transportData={transportData} />} />
+          <Route index element={<Home transportData={transportData} colors={colors} />} />
           <Route path="/A111" element={<A111 />} />
           <Route path="/A11" element={<A11 />} />
           <Route path="/TB11" element={<TB11 />} />
@@ -51,3 +38,38 @@ function App() {
 }
 
 export default App
+
+
+
+// possible merge of FE data and BE data into one state
+
+  // function updateArray(element, transportData, setTransportData, colorOptions) {
+
+  //   if (!element.hasOwnProperty('color')) {
+  //     if (colorOptions.hasOwnProperty(element.line)) {
+  
+  //       const indexToUpdate = transportData.findIndex(obj => obj.line === element.line);
+  
+  //       const newTransportData = [...transportData];
+  
+  //       newTransportData[indexToUpdate] = {
+  //         ...newTransportData[indexToUpdate],
+  //         color: colorOptions[element.line],
+  //       };
+  
+  //       setTransportData(newTransportData)
+  //     }
+  //   }
+  // }
+
+
+  // function App() {
+
+    // const [transportData, setTransportData] = useState(data);
+    // transportData.map(element => {
+    //   updateArray(element, transportData, setTransportData, colorOptions)
+    // })
+
+  // }
+
+

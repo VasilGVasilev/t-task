@@ -25,3 +25,5 @@ We will apply the custom hook 2.
 - [leaflet Events] To manipulate events use hooks like useMapEvent() if you want to manipulate the actual children components of MapContainer -> see eventHandlers.
 
 - [react converts into json on import] When you import a JSON file in a React application, the file is automatically parsed into a JavaScript object. This behavior is due to the json-loader module which is included in tools like Create React App and Webpack. As a result, you don't need to manually parse the JSON file using JSON.parse()
+
+- [update data with colors before using it] I made my own separate colorsOption data. I commented out a possible way to merge it with the original data only in state, but decided for the purposes of this app and given the fact there is no actual API call to fetch data, I am not going to further delve into DB optimization.
