@@ -23,3 +23,5 @@ We will apply the custom hook 2.
 
 - [navigate vs redirect] Leaflet does not work with redirect which is used for actions/loaders, but works with [navigate](https://stackoverflow.com/questions/74413650/what-is-difference-between-usenavigate-and-redirect-in-react-route-v6). My goal was to trigger a redirection to the line's route on click of that very line. 
 - [leaflet Events] To manipulate events use hooks like useMapEvent() if you want to manipulate the actual children components of MapContainer -> see eventHandlers.
+
+- [react converts into json on import] When you import a JSON file in a React application, the file is automatically parsed into a JavaScript object. This behavior is due to the json-loader module which is included in tools like Create React App and Webpack. As a result, you don't need to manually parse the JSON file using JSON.parse()

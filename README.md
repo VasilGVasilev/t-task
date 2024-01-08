@@ -11,6 +11,7 @@
 - Tailwind
 - react/icons
 - framer-motion
+- react-query
 - Redux
 - Leaflet
 - Cypress
