@@ -12,6 +12,8 @@ const Home = ({ transportData, colors }) => {
     const [visibleTM8, setVisibleTM8] = useState(true);
     const [visibleTM10, setVisibleTM10] = useState(true);
 
+
+
     const navigate = useNavigate()
 
 
@@ -65,7 +67,7 @@ const Home = ({ transportData, colors }) => {
                 {
                     visibleLineBoolean
                     &&
-                    <>
+                    <div>
                         <Polyline
                             pathOptions={{ color: colors[lineName], weight: 6 }}
                             positions={specificPolyline(lineName)}
@@ -74,7 +76,7 @@ const Home = ({ transportData, colors }) => {
                             }}
                         />
                         {allStations(lineName)}
-                    </>
+                    </div>
 
                 }
             </>
@@ -104,8 +106,8 @@ const Home = ({ transportData, colors }) => {
 
 
     return (
-        <div className='flex flex-col md:flex-row justify-center items-center'>
-            <div className='md:basis-3/4 m-5 rounded-2xl shadow-2xl'>
+        <div className='grid grid-cols-1 md:grid-cols-4 justify-center items-center'>
+            <div className='md:col-span-3 m-5 rounded-2xl shadow-2xl'>
                 <MapContainer
                     center={[42.688334, 23.319941]}
                     zoom={12}
@@ -138,7 +140,7 @@ const Home = ({ transportData, colors }) => {
 
                 </MapContainer>
             </div>
-            <div className="md:basis-1/4 m-5 justify-evenly">
+            <div className="md:col-span-1 m-5 justify-around">
                 <div className="p-10 bg-orange-300 flex flex-col justify-center items-center">
                     <button onClick={checkA111visibility}>
                         A111
@@ -158,7 +160,7 @@ const Home = ({ transportData, colors }) => {
                 </div>
                 <div>
 
-                    <div >
+                    <div >asd
 
                     </div>
                 </div>

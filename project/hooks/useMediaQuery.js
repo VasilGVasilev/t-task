@@ -1,4 +1,4 @@
-// on every resize we check if query param ( examples: "(min-width: 1060px)", "(min-width: 768px)") matches the current size of desktop and if yes, we return true which as a Boolean
+// on every resize we check if query param ( examples: "(min-width: 1060px)", "(min-width: 768px)") matches the current size of desktop and if yes, we return true as a Boolean
 
 import { useState, useEffect } from "react";
 

@@ -29,10 +29,10 @@
 
 
 ### App logic
-- [ ] Fetch data and store it in state
-- [ ] Create basic index page - map and list divs
-- [ ] Add leaflet for map div of main page
-- [ ] Add actual lines on map and in list
-- [ ] Make lines clickable
-- [ ] Create routes for each line
+- [X] "Fetch data" and store it in state
+- [X] Create basic index page - map and list divs
+- [X] Add leaflet for map div of main page
+- [X] Add actual lines on map and in list
+- [X] Make lines clickable
+- [X] Create routes for each line
 - [ ] Make index page filter for bus/tram/trolley

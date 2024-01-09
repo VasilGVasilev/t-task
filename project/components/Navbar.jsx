@@ -89,7 +89,7 @@ const Navbar = () => {
 
                 <Link className='saturate-200 duration-200 flex justify-center items-center h-14 w-20 sm:h-20 sm:w-32 text-xl 2xl:text-2xl text-black font-bold' to={'/'}>
 
-                    <img src="cgm.png" className=" h-10 w-10 sm:h-16 sm:w-16 rounded-full hover:scale-110 transition duration-300" alt="" />
+                    <img src="cgm.png" className=" h-10 w-10 sm:h-16 sm:w-16 rounded-full hover:saturate-150 transition duration-300" alt="" />
 
 
 
