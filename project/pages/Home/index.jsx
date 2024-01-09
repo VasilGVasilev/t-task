@@ -1,5 +1,5 @@
 import "leaflet/dist/leaflet.css"
-import { Circle, MapContainer, Marker, Polyline, TileLayer } from 'react-leaflet'
+import { Circle, MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -21,6 +21,12 @@ const Home = ({ transportData, colors }) => {
 
     }
 
+    function specificStationName(lineName, index) {
+        let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
+        return transportData[indexOfSpecificLine].routes[0].stops[index].name
+
+    }
+
     function handleLineOnMapClick(lineName) {
         navigate(lineName)
     }
@@ -33,7 +39,8 @@ const Home = ({ transportData, colors }) => {
                 <MapContainer
                     center={[42.688334, 23.319941]}
                     zoom={12}
-                    className='h-[50vh] w-[90vw] md:h-[85vh] md:w-full '
+                    className='h-[50vh] w-[90vw] md:h-[85vh] md:w-full'
+                    scrollWheelZoom={false}
                 >
                     <Polyline
                         pathOptions={{ color: colors.A111 }}
@@ -41,13 +48,6 @@ const Home = ({ transportData, colors }) => {
                         eventHandlers={{
                             click: () => handleLineOnMapClick('A111')
                         }}
-                    />
-
-                    <Circle
-                        center={specificStation('A111')[0]}
-                        pathOptions={{ color: colors.A111, fillColor: colors.A111 }}
-                        radius={100}
-                        key={0}
                     />
 
                     <Polyline
@@ -86,14 +86,90 @@ const Home = ({ transportData, colors }) => {
                     />
 
                     {
-                        specificStation('A111').map((coords,index) => {
-                            return(
+                        specificStation('A111').map((coords, index) => {
+                            return (
                                 <Circle
                                     center={coords}
                                     pathOptions={{ color: colors.A111, fillColor: colors.A111 }}
-                                    radius={100}
+                                    radius={40}
                                     key={index}
-                                ></Circle>
+                                >
+                                    <Popup>
+                                        {specificStationName("A111", index)}
+                                    </Popup>
+                                </Circle>
+
+                            )
+
+                        })
+                    }
+                    {
+                        specificStation('A11').map((coords, index) => {
+                            return (
+                                <Circle
+                                    center={coords}
+                                    pathOptions={{ color: colors.A11, fillColor: colors.A11 }}
+                                    radius={40}
+                                    key={index}
+                                >
+                                    <Popup>
+                                        {specificStationName("A11", index)}
+                                    </Popup>
+                                </Circle>
+
+                            )
+
+                        })
+                    }
+                    {
+                        specificStation('TB11').map((coords, index) => {
+                            return (
+                                <Circle
+                                    center={coords}
+                                    pathOptions={{ color: colors.TB11, fillColor: colors.TB11 }}
+                                    radius={40}
+                                    key={index}
+                                >
+                                    <Popup>
+                                        {specificStationName("TB11", index)}
+                                    </Popup>
+                                </Circle>
+
+                            )
+
+                        })
+                    }
+                    {
+                        specificStation('TM8').map((coords, index) => {
+                            return (
+                                <Circle
+                                    center={coords}
+                                    pathOptions={{ color: colors.TM8, fillColor: colors.TM8 }}
+                                    radius={40}
+                                    key={index}
+                                >
+                                    <Popup>
+                                        {specificStationName("TM8", index)}
+                                    </Popup>
+                                </Circle>
+
+                            )
+
+                        })
+                    }
+                    {
+                        specificStation('TM10').map((coords, index) => {
+                            return (
+                                <Circle
+                                    center={coords}
+                                    pathOptions={{ color: colors.TM10, fillColor: colors.TM10 }}
+                                    radius={40}
+                                    key={index}
+                                >
+                                    <Popup>
+                                        {specificStationName("TM10", index)}
+                                    </Popup>
+                                </Circle>
 
                             )
 
