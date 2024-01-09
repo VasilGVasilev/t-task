@@ -16,14 +16,14 @@ const container = {
     hidden: {},
     visible: {
         transition: {
-            staggerChildren: 0.1,
+            staggerChildren: 0.3,
         },
     },
 };
 
 const navbarVariant = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1 },
+    hidden: { opacity: 0, x: 100 },
+    visible: { opacity: 1, x: 0 },
 };
 
 const LinkMobileTemplate = ({ urlLink, page, setIsMenuToggled, lineColor }) => {
@@ -33,13 +33,15 @@ const LinkMobileTemplate = ({ urlLink, page, setIsMenuToggled, lineColor }) => {
         <motion.div
             variants={navbarVariant}
             viewport={{ once: true }}
-            style={{"backgroundColor": lineColor}}
-            className="p-2"
+            style={{"backgroundColor": "white"}}
+            className="w-full h-auto p-5"
         >
             <Link
                 to={urlLink}
-                className={`${location.pathname === urlLink ? "text-white font-extrabold" : "text-black"
-                    }  transition duration-300 `}
+            style={{"color": lineColor}}
+
+                className={`${location.pathname === urlLink ? "text-black font-extrabold" : "text-black"
+                    }  font-bold transition duration-300 w-full h-auto`}
                 onClick={() => {
                     setIsMenuToggled(false);
                 }
@@ -57,7 +59,7 @@ const LinkTemplate = ({ urlLink, page }) => {
     return (
         <Link
             to={urlLink}
-            className={`${location.pathname == urlLink ? "text-[#142D55]" : "text-white"
+            className={`${location.pathname == urlLink ? "text-[#142D55]" : "text-black"
                 }  transition duration-300 hover:text-[#00BAFC]`}
         >
             {page}
@@ -81,7 +83,7 @@ const Navbar = () => {
     }
 
     return (
-        <nav className={` bg-gradient-to-t from-[#166534] to-[#166534b6] flex flex-col z-40 w-full shadow-xl`} >
+        <nav className={`bg-white flex flex-col z-40 w-full shadow-lg`} >
 
             <div className="flex items-center justify-between mx-auto w-5/6">
 
@@ -130,12 +132,12 @@ const Navbar = () => {
                 {/* MOBILE MENU POPUP */}
                 {!isDesktop && isMenuToggled && (
                     <div
-                        className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-80"
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80"
                         onClick={closeModal}
                         ref={modalRef}
                     >
                         <motion.div
-                            className="fixed right-0 bottom-0 h-full bg-[#052e16] w-[340px]"
+                            className="fixed right-0 bottom-0 h-full bg-black w-[340px]"
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: true, amount: 0.1 }}
