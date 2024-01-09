@@ -27,6 +27,42 @@ const Home = ({ transportData, colors }) => {
 
     }
 
+    function allStations() {
+        return transportData.map(element => {
+            return (specificStation(element.line).map((coords, index) => {
+                return (
+                    <Circle
+                        center={coords}
+                        pathOptions={{ color: colors[element.line], fillColor: colors[element.line] }}
+                        radius={40}
+                        key={index}
+                    >
+                        <Popup>
+                            {specificStationName(element.line, index)}
+                        </Popup>
+                    </Circle>
+
+                )
+
+            }))
+        })
+    }
+
+    function allPolylines() {
+        return transportData.map((element, index) => {
+            return (
+                <Polyline
+                    pathOptions={{ color: colors[element.line] }}
+                    positions={specificPolyline(element.line)}
+                    eventHandlers={{
+                        click: () => handleLineOnMapClick(element.line)
+                    }}
+                    key={index}
+                />
+            )
+        })
+    }
+
     function handleLineOnMapClick(lineName) {
         navigate(lineName)
     }
@@ -42,43 +78,9 @@ const Home = ({ transportData, colors }) => {
                     className='h-[50vh] w-[90vw] md:h-[85vh] md:w-full'
                     scrollWheelZoom={false}
                 >
-                    <Polyline
-                        pathOptions={{ color: colors.A111 }}
-                        positions={specificPolyline('A111')}
-                        eventHandlers={{
-                            click: () => handleLineOnMapClick('A111')
-                        }}
-                    />
-
-                    <Polyline
-                        pathOptions={{ color: colors.A11 }}
-                        positions={specificPolyline('A11')}
-                        eventHandlers={{
-                            click: () => handleLineOnMapClick('A11')
-                        }}
-                    />
-                    <Polyline
-                        pathOptions={{ color: colors.TB11 }}
-                        positions={specificPolyline('TB11')}
-                        eventHandlers={{
-                            click: () => handleLineOnMapClick('TB11')
-                        }}
-                    />
-
-                    <Polyline
-                        pathOptions={{ color: colors.TM10 }}
-                        positions={specificPolyline('TM10')}
-                        eventHandlers={{
-                            click: () => handleLineOnMapClick('TM10')
-                        }}
-                    />
-                    <Polyline
-                        pathOptions={{ color: colors.TM8 }}
-                        positions={specificPolyline('TM8')}
-                        eventHandlers={{
-                            click: () => handleLineOnMapClick('TM8')
-                        }}
-                    />
+                    {
+                        allPolylines()
+                    }
 
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -86,95 +88,10 @@ const Home = ({ transportData, colors }) => {
                     />
 
                     {
-                        specificStation('A111').map((coords, index) => {
-                            return (
-                                <Circle
-                                    center={coords}
-                                    pathOptions={{ color: colors.A111, fillColor: colors.A111 }}
-                                    radius={40}
-                                    key={index}
-                                >
-                                    <Popup>
-                                        {specificStationName("A111", index)}
-                                    </Popup>
-                                </Circle>
-
-                            )
-
-                        })
+                        allStations()
                     }
-                    {
-                        specificStation('A11').map((coords, index) => {
-                            return (
-                                <Circle
-                                    center={coords}
-                                    pathOptions={{ color: colors.A11, fillColor: colors.A11 }}
-                                    radius={40}
-                                    key={index}
-                                >
-                                    <Popup>
-                                        {specificStationName("A11", index)}
-                                    </Popup>
-                                </Circle>
 
-                            )
 
-                        })
-                    }
-                    {
-                        specificStation('TB11').map((coords, index) => {
-                            return (
-                                <Circle
-                                    center={coords}
-                                    pathOptions={{ color: colors.TB11, fillColor: colors.TB11 }}
-                                    radius={40}
-                                    key={index}
-                                >
-                                    <Popup>
-                                        {specificStationName("TB11", index)}
-                                    </Popup>
-                                </Circle>
-
-                            )
-
-                        })
-                    }
-                    {
-                        specificStation('TM8').map((coords, index) => {
-                            return (
-                                <Circle
-                                    center={coords}
-                                    pathOptions={{ color: colors.TM8, fillColor: colors.TM8 }}
-                                    radius={40}
-                                    key={index}
-                                >
-                                    <Popup>
-                                        {specificStationName("TM8", index)}
-                                    </Popup>
-                                </Circle>
-
-                            )
-
-                        })
-                    }
-                    {
-                        specificStation('TM10').map((coords, index) => {
-                            return (
-                                <Circle
-                                    center={coords}
-                                    pathOptions={{ color: colors.TM10, fillColor: colors.TM10 }}
-                                    radius={40}
-                                    key={index}
-                                >
-                                    <Popup>
-                                        {specificStationName("TM10", index)}
-                                    </Popup>
-                                </Circle>
-
-                            )
-
-                        })
-                    }
                 </MapContainer>
             </div>
             <div className="m-5">asdasd</div>
