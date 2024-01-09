@@ -7,7 +7,11 @@ export default {
     './components/**/*.{html,js,jsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        ptskyBlue: '#00BAFC',
+      }
+    },
   },
   plugins: [],
 }

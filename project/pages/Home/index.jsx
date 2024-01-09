@@ -106,12 +106,12 @@ const Home = ({ transportData, colors }) => {
 
 
     return (
-        <div className='grid grid-cols-1 md:grid-cols-4 justify-center items-center'>
-            <div className='md:col-span-3 m-5 rounded-2xl shadow-2xl'>
+        <div className='grid grid-cols-1 md:grid-cols-4 justify-center items-center gap-5'>
+            <div className='w-90 h-full md:col-span-3 rounded-2xl '>
                 <MapContainer
                     center={[42.688334, 23.319941]}
                     zoom={12}
-                    className='h-[50vh] w-[90vw] md:h-[85vh] md:w-full rounded-2xl z-20'
+                    className='h-[50vh] w-full md:h-[85vh] rounded-2xl z-20'
                     scrollWheelZoom={false}
                 >
 
@@ -140,8 +140,17 @@ const Home = ({ transportData, colors }) => {
 
                 </MapContainer>
             </div>
-            <div className="md:col-span-1 m-5 justify-around">
-                <div className="p-10 bg-orange-300 flex flex-col justify-center items-center">
+            <div className="w-full h-full grid grid-rows-4 md:col-span-1">
+                <div className="row-start-1 row-end-2 flex flex-col justify-center items-center">
+
+                    <div className="flex flex-row justify-center items-center text-white shadow-2xl rounded-[400px] cursor-pointer ">
+                        <div className="bg-ptskyBlue rounded-l-[400px] border-r-[1px] border-white py-2 pl-3 pr-1 hover:bg-[#0032AA] transition duration-300 ease-in-out">Bus</div>
+                        <div className="bg-gradient-to-r from-ptskyBlue to-blue-400 py-2 px-1 hover:bg-[#0032AA] transition duration-300 ease-in-out">Trolleybus</div>
+                        <div className="bg-blue-400 rounded-r-[400px] border-l-[1px] border-white py-2 pl-1 pr-3 hover:bg-[#0032AA] transition duration-300 ease-in-out">Tram</div>
+
+                    </div>
+                </div>
+                <div className="row-start-2 row-end-4 bg-orange-300 flex flex-col justify-center items-center">
                     <button onClick={checkA111visibility}>
                         A111
                     </button>
@@ -158,12 +167,7 @@ const Home = ({ transportData, colors }) => {
                         TM8
                     </button>
                 </div>
-                <div>
 
-                    <div >asd
-
-                    </div>
-                </div>
             </div>
         </div>
     )

@@ -60,7 +60,7 @@ const LinkTemplate = ({ urlLink, page }) => {
         <Link
             to={urlLink}
             className={`${location.pathname == urlLink ? "text-[#142D55]" : "text-black"
-                }  transition duration-300 hover:text-[#00BAFC]`}
+                }  transition duration-300 hover:text-ptskyBlue`}
         >
             {page}
         </Link>
@@ -96,7 +96,7 @@ const Navbar = () => {
                 </Link>
                 {/* DESKTOP NAV */}
                 {isDesktop ? (
-                    <div className={`text-xl 2xl:text-2xl flex justify-between gap-10 2xl:gap-16 font-bold`}>
+                    <div className={`text-xl 2xl:text-2xl flex justify-between gap-10 2xl:gap-16 font-semibold`}>
 
                         <LinkTemplate
                             urlLink='/A11'
