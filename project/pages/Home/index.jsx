@@ -149,7 +149,7 @@ const Home = ({ transportData, colors }) => {
 
 
     return (
-        <div className='grid grid-cols-1 md:grid-cols-5 justify-center items-center gap-5'>
+        <div className='grid grid-cols-1 md:grid-cols-5 justify-center items-center gap-5 m-5'>
             <div className='w-90 h-full md:col-span-3 rounded-2xl '>
                 <MapContainer
                     center={[42.688334, 23.319941]}

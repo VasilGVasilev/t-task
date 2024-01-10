@@ -25,11 +25,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home transportData={transportData} colors={colors} />} />
-          <Route path="/A111" element={<A111 />} />
-          <Route path="/A11" element={<A11 />} />
-          <Route path="/TB11" element={<TB11 />} />
-          <Route path="/TM8" element={<TM8 />} />
-          <Route path="/TM10" element={<TM10 />} />
+          <Route path="/A111" element={<A111 transportData={transportData} colors={colors} />} />
+          <Route path="/A11" element={<A11 transportData={transportData} colors={colors} />} />
+          <Route path="/TB11" element={<TB11 transportData={transportData} colors={colors} />} />
+          <Route path="/TM8" element={<TM8 transportData={transportData} colors={colors} />} />
+          <Route path="/TM10" element={<TM10 transportData={transportData} colors={colors} />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
