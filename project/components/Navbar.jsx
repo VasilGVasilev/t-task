@@ -38,7 +38,7 @@ const LinkMobileTemplate = ({ urlLink, page, setIsMenuToggled, lineColor }) => {
         >
             <Link
                 to={urlLink}
-            style={{"color": lineColor}}
+                style={{"color": lineColor}}
 
                 className={`${location.pathname === urlLink ? "text-black font-extrabold" : "text-black"
                     }  font-bold transition duration-300 w-full h-auto`}
@@ -60,7 +60,7 @@ const LinkTemplate = ({ urlLink, page }) => {
         <Link
             to={urlLink}
             className={`${location.pathname == urlLink ? "text-[#142D55]" : "text-black"
-                }  transition duration-300 hover:text-ptskyBlue`}
+                }  transition duration-200 hover:text-ptskyBlue`}
         >
             {page}
         </Link>
@@ -89,7 +89,7 @@ const Navbar = () => {
 
                 <Link className='saturate-200 duration-200 flex justify-center items-center h-14 w-20 sm:h-20 sm:w-32 text-xl 2xl:text-2xl text-black font-bold' to={'/'}>
 
-                    <img src="cgm.png" className=" h-10 w-10 sm:h-16 sm:w-16 rounded-full hover:saturate-150 transition duration-300" alt="" />
+                    <img src="cgm.png" className=" h-10 w-10 sm:h-16 sm:w-16 rounded-full hover:saturate-200 transition duration-200" alt="" />
 
 
 
@@ -171,7 +171,7 @@ const Navbar = () => {
                                         urlLink='/A11'
                                         page="A11"
                                         setIsMenuToggled={setIsMenuToggled}
-                                        lineColor={'#ca8a04'}
+                                        lineColor='#ca8a04'
                                     />
 
 

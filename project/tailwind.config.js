@@ -10,6 +10,7 @@ export default {
     extend: {
       colors: {
         ptskyBlue: '#00BAFC',
+        ptdarkBlue: '#0032AA'
       }
     },
   },
