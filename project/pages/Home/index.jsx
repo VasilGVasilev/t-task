@@ -1,11 +1,14 @@
 import "leaflet/dist/leaflet.css"
 import { useState } from "react";
 import { Circle, MapContainer, Polyline, Popup, TileLayer } from 'react-leaflet'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 
 const Home = ({ transportData, colors }) => {
+
+    const navigate = useNavigate()
+
     const [lineVisible, setLineVisible] = useState({
         A111: true,
         A11: true,
@@ -14,10 +17,13 @@ const Home = ({ transportData, colors }) => {
         TM10: true
     })
 
+    const [isFilterClicked, setIsFilterClicked] = useState({
+        'A': true,
+        'TB': true,
+        'TM': true,
+    })
 
-
-    const navigate = useNavigate()
-
+    // visualizes specific
 
     function specificPolyline(lineName) {
         let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
@@ -39,6 +45,7 @@ const Home = ({ transportData, colors }) => {
     }
 
 
+    // visualize components
 
     function allStations(lineName) {
 
@@ -62,14 +69,14 @@ const Home = ({ transportData, colors }) => {
         }))
     }
 
-    function visalizeLine(lineName, visibleLineBoolean) {
+    function visualizeLineOnMap(lineName, visibleLineBoolean) {
         return (
 
             <>
                 {
                     visibleLineBoolean
                     &&
-                    <div>
+                    <>
                         <Polyline
                             pathOptions={{ color: colors[lineName], weight: 6 }}
                             positions={specificPolyline(lineName)}
@@ -78,7 +85,7 @@ const Home = ({ transportData, colors }) => {
                             }}
                         />
                         {allStations(lineName)}
-                    </div>
+                    </>
 
                 }
             </>
@@ -86,9 +93,30 @@ const Home = ({ transportData, colors }) => {
         )
     }
 
-    function handleLineOnMapClick(lineName) {
-        navigate(lineName)
+    function visualizeLineOnList(lineName, visibleLineBoolean) {
+        return (
+            <>
+                {
+                    visibleLineBoolean
+                    &&
+                    <Link
+                        className="w-5/6 h-auto flex flex-col justify-center items-start p-2 rounded-sm"
+                        style={{ backgroundColor: colors[lineName] }}
+                        to={lineName}
+                    >
+                        <div>
+                            {lineName}
+                        </div>
+                    </Link>
+
+                }
+            </>
+        )
     }
+
+
+
+    // Handle visibility of lines on map and in list
 
     function changeLineVisibility(lineName) {
         setLineVisible(prevState => ({
@@ -97,54 +125,27 @@ const Home = ({ transportData, colors }) => {
         }))
     }
 
-    function hideBusLines(){
+    function hideTypeOfTransport(typeOfTrans) {
+        setIsFilterClicked(prevState => ({
+            ...prevState,
+            [typeOfTrans]: !prevState[typeOfTrans]
+        }))
         const arrBuses = []
-        transportData.map(element=>{
-            if(element.routes[0]["transportType"] === "A"){
+        transportData.map(element => {
+            if (element.routes[0]["transportType"] === typeOfTrans) {
                 arrBuses.push(element.line)
             }
-            
+
         })
-        arrBuses.map(bus =>{
+        arrBuses.map(bus => {
             changeLineVisibility(bus)
         })
     }
 
-    function hideTramLines(){
-        const arrTrams = []
-        transportData.map(element=>{
-            if(element.routes[0]["transportType"] === "TM"){
-                arrTrams.push(element.line)
-            }
-            
-        })
-        arrTrams.map(tram =>{
-            changeLineVisibility(tram)
-        })
+    // Handle clicks on LeafletMap
+    function handleLineOnMapClick(lineName) {
+        navigate(lineName)
     }
-
-    function hideTrolleybusLines(){
-        const arrTrolleybus = []
-        transportData.map(element=>{
-            if(element.routes[0]["transportType"] === "TB"){
-                arrTrolleybus.push(element.line)
-            }
-            
-        })
-        arrTrolleybus.map(trolleybus =>{
-            changeLineVisibility(trolleybus)
-        })
-    }
-
-    // function checkTramVisibility(){
-    //     transportData.map(element =>{
-    //         const transType = element.routes[0].transportType;
-    //         if(transType === 'A'){
-    //             checkTM8visibility();
-    //             checkTM10visibility();
-    //         }
-    //     })
-    // }
 
 
     return (
@@ -156,21 +157,21 @@ const Home = ({ transportData, colors }) => {
                     className='h-[50vh] w-full md:h-[85vh] rounded-2xl z-20'
                     scrollWheelZoom={false}
                 >
-
+                    {/* this has to be manual due to TM8 and T10 overlapping in natural order of DB */}
                     {
-                        visalizeLine('A111', lineVisible.A111)
+                        visualizeLineOnMap('A111', lineVisible.A111)
                     }
                     {
-                        visalizeLine('A11', lineVisible.A11)
+                        visualizeLineOnMap('A11', lineVisible.A11)
                     }
                     {
-                        visalizeLine('TB11', lineVisible.TB11)
+                        visualizeLineOnMap('TB11', lineVisible.TB11)
                     }
                     {
-                        visalizeLine('TM10', lineVisible.TM10)
+                        visualizeLineOnMap('TM10', lineVisible.TM10)
                     }
                     {
-                        visalizeLine('TM8', lineVisible.TM8)
+                        visualizeLineOnMap('TM8', lineVisible.TM8)
                     }
 
 
@@ -182,49 +183,52 @@ const Home = ({ transportData, colors }) => {
 
                 </MapContainer>
             </div>
-            <div className="w-full h-full grid grid-rows-4 md:col-span-2">
+            <div className="w-full h-full grid grid-rows-4 md:col-span-2 gap-5">
                 <div className="row-start-1 row-end-2 flex flex-col justify-center items-center">
 
-                    <div className="flex flex-row justify-center items-center text-white shadow-2xl rounded-xl cursor-pointer font-extrabold text-4xl ">
+                    <div className="flex flex-row justify-center items-center text-white shadow-2xl rounded-xl cursor-pointer font-bold md:text-3xl select-none">
                         <div
-                            className=" rounded-l-xl border-r-[1px] border-white py-3 pl-5 pr-2 bg-ptskyBlue"
-                            onClick={hideBusLines}
+                            style={{ backgroundColor: isFilterClicked['A'] ? '#0032AA' : '#00BAFC' }}
+                            className="text-center rounded-l-md border-r-[1px] border-white py-3 pl-5 pr-3 "
+                            onClick={() => hideTypeOfTransport('A')}
                         >
                             Bus
                         </div>
                         <div
-                            className="py-3 px-3 bg-ptskyBlue"
-                            onClick={hideTrolleybusLines}
-
+                            style={{ backgroundColor: isFilterClicked['TB'] ? '#0032AA' : '#00BAFC' }}
+                            className="py-3 px-3"
+                            onClick={() => hideTypeOfTransport('TB')}
                         >
                             Trolleybus
                         </div>
                         <div
-                            className={`rounded-r-xl border-l-[1px] border-white py-3 pl-2 pr-5  bg-ptskyBlue`}
-                            onClick={hideTramLines}
-                        
+                            style={{ backgroundColor: isFilterClicked['TM'] ? '#0032AA' : '#00BAFC' }}
+                            className={`rounded-r-md border-l-[1px] border-white py-3 pl-3 pr-5 `}
+                            onClick={() => hideTypeOfTransport('TM')}
                         >
                             Tram
                         </div>
 
                     </div>
                 </div>
-                <div className="row-start-2 row-end-4 bg-gray-200 flex flex-col justify-center items-center">
-                    <button onClick={() => changeLineVisibility('A111')}>
-                        A111
-                    </button>
-                    <button onClick={() => changeLineVisibility('A11')}>
-                        A11
-                    </button>
-                    <button onClick={() => changeLineVisibility('TB11')}>
-                        TB11
-                    </button>
-                    <button onClick={() => changeLineVisibility('TM10')}>
-                        TM10
-                    </button>
-                    <button onClick={() => changeLineVisibility('TM8')}>
-                        TM8
-                    </button>
+                <div className="row-start-2 row-end-4  flex flex-col justify-center items-center gap-1">
+
+                    {
+                        visualizeLineOnList('A111', lineVisible.A111)
+                    }
+                    {
+                        visualizeLineOnList('A11', lineVisible.A11)
+                    }
+                    {
+                        visualizeLineOnList('TB11', lineVisible.TB11)
+                    }
+                    {
+                        visualizeLineOnList('TM10', lineVisible.TM10)
+                    }
+                    {
+                        visualizeLineOnList('TM8', lineVisible.TM8)
+                    }
+
                 </div>
 
             </div>
