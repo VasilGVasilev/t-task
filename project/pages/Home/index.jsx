@@ -3,6 +3,98 @@ import { useState } from "react";
 import { Circle, MapContainer, Polyline, Popup, TileLayer } from 'react-leaflet'
 import { Link, useNavigate } from 'react-router-dom'
 
+// FUNCTIONS OUTSIDE COMPONENTS TO BE RENDER EFFICIENT
+
+// visualizes specific
+
+function specificPolyline(lineName, transportData) {
+    let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
+    return transportData[indexOfSpecificLine].routes[0].segments.reduce((accumulator, segment) => {
+        return accumulator.concat(segment.coordinates.map(coordinate => [coordinate.lat, coordinate.lon], { offset: 5 }));
+    }, []);
+}
+
+function allStationsCoords(lineName, transportData) {
+    let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
+    return transportData[indexOfSpecificLine].routes[0].stops.map(stop => [stop.location.lat, stop.location.lon])
+
+}
+
+function specificStationName(lineName, index, transportData) {
+    let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
+    return transportData[indexOfSpecificLine].routes[0].stops[index].name
+
+}
+
+
+// visualize components
+
+function allStationsVisualized(lineName, transportData) {
+
+    return (allStationsCoords(lineName, transportData).map((coords, index) => {
+        return (
+
+            <Circle
+                center={coords}
+                pathOptions={{ color: "black", fillColor: "white", fillOpacity: 1 }}
+                radius={20}
+                key={index}
+            >
+                <Popup
+                >
+                    {specificStationName(lineName, index, transportData)}
+                </Popup>
+            </Circle>
+
+        )
+
+    }))
+}
+
+function visualizeLineOnMap(lineName, visibleLineBoolean, transportData, colors, handleLineOnMapClick) {
+    return (
+
+        <>
+            {
+                visibleLineBoolean
+                &&
+                <>
+                    <Polyline
+                        pathOptions={{ color: colors[lineName], weight: 6 }}
+                        positions={specificPolyline(lineName, transportData)}
+                        eventHandlers={{
+                            click: () => handleLineOnMapClick(lineName)
+                        }}
+                    />
+                    {allStationsVisualized(lineName, transportData)}
+                </>
+
+            }
+        </>
+
+    )
+}
+
+function visualizeLineOnList(lineName, visibleLineBoolean, colors) {
+    return (
+        <>
+            {
+                visibleLineBoolean
+                &&
+                <Link
+                    className="w-5/6 h-auto flex flex-col justify-center items-start p-2 text-white font-semibold rounded-sm shadow-2xl"
+                    style={{ backgroundColor: colors[lineName] }}
+                    to={lineName}
+                >
+                    <div>
+                        {lineName}
+                    </div>
+                </Link>
+
+            }
+        </>
+    )
+}
 
 
 const Home = ({ transportData, colors }) => {
@@ -23,96 +115,6 @@ const Home = ({ transportData, colors }) => {
         'TM': true,
     })
 
-    // visualizes specific
-
-    function specificPolyline(lineName) {
-        let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
-        return transportData[indexOfSpecificLine].routes[0].segments.reduce((accumulator, segment) => {
-            return accumulator.concat(segment.coordinates.map(coordinate => [coordinate.lat, coordinate.lon], { offset: 5 }));
-        }, []);
-    }
-
-    function specificStation(lineName) {
-        let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
-        return transportData[indexOfSpecificLine].routes[0].stops.map(stop => [stop.location.lat, stop.location.lon])
-
-    }
-
-    function specificStationName(lineName, index) {
-        let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
-        return transportData[indexOfSpecificLine].routes[0].stops[index].name
-
-    }
-
-
-    // visualize components
-
-    function allStations(lineName) {
-
-        return (specificStation(lineName).map((coords, index) => {
-            return (
-
-                <Circle
-                    center={coords}
-                    pathOptions={{ color: "black", fillColor: "white", fillOpacity: 1 }}
-                    radius={20}
-                    key={index}
-                >
-                    <Popup
-                    >
-                        {specificStationName(lineName, index)}
-                    </Popup>
-                </Circle>
-
-            )
-
-        }))
-    }
-
-    function visualizeLineOnMap(lineName, visibleLineBoolean) {
-        return (
-
-            <>
-                {
-                    visibleLineBoolean
-                    &&
-                    <>
-                        <Polyline
-                            pathOptions={{ color: colors[lineName], weight: 6 }}
-                            positions={specificPolyline(lineName)}
-                            eventHandlers={{
-                                click: () => handleLineOnMapClick(lineName)
-                            }}
-                        />
-                        {allStations(lineName)}
-                    </>
-
-                }
-            </>
-
-        )
-    }
-
-    function visualizeLineOnList(lineName, visibleLineBoolean) {
-        return (
-            <>
-                {
-                    visibleLineBoolean
-                    &&
-                    <Link
-                        className="w-5/6 h-auto flex flex-col justify-center items-start p-2 text-white font-semibold rounded-sm shadow-2xl"
-                        style={{ backgroundColor: colors[lineName] }}
-                        to={lineName}
-                    >
-                        <div>
-                            {lineName}
-                        </div>
-                    </Link>
-
-                }
-            </>
-        )
-    }
 
 
 
@@ -159,19 +161,19 @@ const Home = ({ transportData, colors }) => {
                 >
                     {/* this has to be manual due to TM8 and T10 overlapping in natural order of DB */}
                     {
-                        visualizeLineOnMap('A111', lineVisible.A111)
+                        visualizeLineOnMap('A111', lineVisible.A111, transportData, colors, handleLineOnMapClick)
                     }
                     {
-                        visualizeLineOnMap('A11', lineVisible.A11)
+                        visualizeLineOnMap('A11', lineVisible.A11, transportData, colors, handleLineOnMapClick)
                     }
                     {
-                        visualizeLineOnMap('TB11', lineVisible.TB11)
+                        visualizeLineOnMap('TB11', lineVisible.TB11, transportData, colors, handleLineOnMapClick)
                     }
                     {
-                        visualizeLineOnMap('TM10', lineVisible.TM10)
+                        visualizeLineOnMap('TM10', lineVisible.TM10, transportData, colors, handleLineOnMapClick)
                     }
                     {
-                        visualizeLineOnMap('TM8', lineVisible.TM8)
+                        visualizeLineOnMap('TM8', lineVisible.TM8, transportData, colors, handleLineOnMapClick)
                     }
 
 
@@ -188,25 +190,26 @@ const Home = ({ transportData, colors }) => {
 
                     <div className="flex flex-row justify-center items-center text-white shadow-2xl rounded-xl cursor-pointer font-semibold md:text-3xl select-none">
                         <div
-                            style={{ backgroundColor: isFilterClicked['A'] ? '#0032AA' : '#00BAFC' }}
-                            className="text-center rounded-l-md border-r-[1px] border-white py-3 pl-5 pr-3 "
-                            onClick={() => hideTypeOfTransport('A')}
-                        >
-                            Bus
-                        </div>
-                        <div
                             style={{ backgroundColor: isFilterClicked['TB'] ? '#0032AA' : '#00BAFC' }}
-                            className="py-3 px-3"
+                            className="text-center rounded-l-md border-r-[1px] border-white py-3 pl-5 pr-3 "
                             onClick={() => hideTypeOfTransport('TB')}
                         >
-                            Trolleybus
+                            Тролейбус
+                        </div>
+                        <div
+                            style={{ backgroundColor: isFilterClicked['A'] ? '#0032AA' : '#00BAFC' }}
+                            className="py-3 px-3"
+                            onClick={() => hideTypeOfTransport('A')}
+
+                        >
+                            Бус
                         </div>
                         <div
                             style={{ backgroundColor: isFilterClicked['TM'] ? '#0032AA' : '#00BAFC' }}
                             className={`rounded-r-md border-l-[1px] border-white py-3 pl-3 pr-5 `}
                             onClick={() => hideTypeOfTransport('TM')}
                         >
-                            Tram
+                            Трамвай
                         </div>
 
                     </div>
@@ -214,19 +217,19 @@ const Home = ({ transportData, colors }) => {
                 <div className="row-start-2 row-end-4  flex flex-col justify-center items-center gap-3 ">
 
                     {
-                        visualizeLineOnList('A111', lineVisible.A111)
+                        visualizeLineOnList('A111', lineVisible.A111, colors)
                     }
                     {
-                        visualizeLineOnList('A11', lineVisible.A11)
+                        visualizeLineOnList('A11', lineVisible.A11, colors)
                     }
                     {
-                        visualizeLineOnList('TB11', lineVisible.TB11)
+                        visualizeLineOnList('TB11', lineVisible.TB11, colors)
                     }
                     {
-                        visualizeLineOnList('TM10', lineVisible.TM10)
+                        visualizeLineOnList('TM10', lineVisible.TM10, colors)
                     }
                     {
-                        visualizeLineOnList('TM8', lineVisible.TM8)
+                        visualizeLineOnList('TM8', lineVisible.TM8, colors)
                     }
 
                 </div>

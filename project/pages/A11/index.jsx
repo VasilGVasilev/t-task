@@ -2,6 +2,13 @@ import "leaflet/dist/leaflet.css"
 import { useState } from "react";
 import { Circle, MapContainer, Polyline, Popup, TileLayer } from "react-leaflet";
 
+import { CgArrowsExchangeAltV } from "react-icons/cg";
+import { FaArrowDown } from "react-icons/fa";
+import { HiUserGroup } from "react-icons/hi2";
+import { FaUserGroup } from "react-icons/fa6";
+import { IoPersonSharp } from "react-icons/io5";
+// FUNCTIONS OUTSIDE COMPONENTS TO BE RENDER EFFICIENT
+
 // visualizes Map specific
 
 function specificPolyline(lineName, transportData) {
@@ -11,7 +18,7 @@ function specificPolyline(lineName, transportData) {
     }, []);
 }
 
-function specificStation(lineName, transportData) {
+function allStationsCoords(lineName, transportData) {
     let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
     return transportData[indexOfSpecificLine].routes[0].stops.map(stop => [stop.location.lat, stop.location.lon])
 
@@ -26,9 +33,9 @@ function specificStationName(lineName, index, transportData) {
 
 // visualize Map components
 
-function allStations(lineName, transportData) {
+function allStationsVisualised(lineName, transportData) {
 
-    return (specificStation(lineName, transportData).map((coords, index) => {
+    return (allStationsCoords(lineName, transportData).map((coords, index) => {
         return (
 
             <Circle
@@ -48,21 +55,54 @@ function allStations(lineName, transportData) {
     }))
 }
 
+// visualize Table components
+
+function routeName(lineName, transportData, routeA) {
+    let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
+    return transportData[indexOfSpecificLine].routes[routeA ? 0 : 1].name
+}
+
+function stopsNameAndCrowding(lineName, transportData, routeA) {
+    let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
+    return transportData[indexOfSpecificLine].routes[routeA ? 0 : 1].stops.map(e => ({name: e.name, averagePeople: e.averagePeople}))
+
+}
+
+function visualizeCrowding(input){
+
+    if(input === 'NaN'){
+        return 'NaN'
+    }
+    let number = Math.ceil(Number(input))
+    if(number>5){
+        return <HiUserGroup className="text-red-600" size={20}/>
+    } else if(number >= 0){
+        return <FaUserGroup className="text-yellow-600" size={20}/>
+    } else if(number < 0){
+        return <IoPersonSharp className="text-green-600" size={20} />
+    }
+}
+
 
 const Line = ({ transportData, colors }) => {
     // easier toggle with Boolean
     const [routeA, setRouteA] = useState(true)
     const lineName = 'A11';
 
-    function handleClickChangeRoute(){
+    function handleClickChangeRoute() {
         setRouteA(!routeA)
     }
 
 
     return (
-        <div className="flex flex-col justify-center items-center">
-            <div className="h-full w-full">
-
+        <div className="flex flex-col justify-center items-center gap-10">
+            <div className="relative h-full w-full flex flex-col justify-center items-center">
+                <div
+                    className="absolute -bottom-8 z-50 p-3 rounded-full bg-ptskyBlue hover:bg-ptdarkBlue cursor-pointer"
+                    onClick={handleClickChangeRoute}
+                >
+                    <CgArrowsExchangeAltV className="text-white" size={50} />
+                </div>
                 <MapContainer
                     center={[42.688334, 23.319941]}
                     zoom={12}
@@ -74,7 +114,7 @@ const Line = ({ transportData, colors }) => {
                         positions={specificPolyline(lineName, transportData)}
 
                     />
-                    {allStations(lineName, transportData)}
+                    {allStationsVisualised(lineName, transportData)}
 
 
                     <TileLayer
@@ -85,16 +125,36 @@ const Line = ({ transportData, colors }) => {
 
                 </MapContainer>
             </div>
-            <div className="relative flex flex-row justify-center items-center">
-                <div 
-                    className="absolute -top-10 z-50 p-10 rounded-3xl bg-red-600"
-                    onClick={handleClickChangeRoute}
-                >
-                    change
-                </div>
-                <div>Table</div>
+            <div className="m-5 flex flex-col justify-center items-center text-xxs sm:text-base">
+
+
+                <table className="h-full w-full">
+                    <thead>
+                        <tr>
+                            <th className="px-3 text-left bg-ptskyBlue text-white">{routeName(lineName, transportData, routeA)}</th>
+                            <th className="px-3 text-left bg-ptskyBlue text-white">Натовареност</th>
+                            <th className="px-3 text-left bg-ptskyBlue text-white">Посока</th>
+                        </tr>
+                    </thead>
+                    <tbody className="">
+                        {
+                            stopsNameAndCrowding(lineName, transportData, routeA).map((stop, index) => {
+                                return (
+
+                                    <tr key={index}>
+                                        <td className="p-3">{stop.name}</td>
+                                        <td className="p-3">{visualizeCrowding(stop.averagePeople)}</td>
+                                        <td className="p-3"><FaArrowDown /></td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+
+                </table>
+
             </div>
-        </div>
+        </div >
     );
 };
 
