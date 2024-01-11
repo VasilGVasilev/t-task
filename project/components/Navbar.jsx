@@ -8,6 +8,7 @@ import { motion } from "framer-motion"
 
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { AiOutlineClose } from 'react-icons/ai'
+import { useSelector } from "react-redux";
 
 
 
@@ -61,6 +62,8 @@ const LinkTemplate = ({ urlLink, page, lineColor }) => {
 
 
 const Navbar = () => {
+    const colors = useSelector((state)=> state.colors.value)
+
     const [isMenuToggled, setIsMenuToggled] = useState(false);
     const isDesktop = useMediaQuery("(min-width: 1120px)");
 
@@ -92,27 +95,27 @@ const Navbar = () => {
                         <LinkTemplate
                             urlLink='/line/A11'
                             page="A11"
-                            lineColor='#ca8a04'
+                            lineColor={colors.A11}
                         />
                         <LinkTemplate
                             urlLink='/line/A111'
                             page="A111"
-                            lineColor="#dc2626"
+                            lineColor={colors.A111}
                         />
                         <LinkTemplate
                             urlLink='/line/TB11'
                             page="TB11"
-                            lineColor="#ea580c"
+                            lineColor={colors.TB11}
                         />
                         <LinkTemplate
                             urlLink='/line/TM8'
                             page="TM8"
-                            lineColor="#6b21a8"
+                            lineColor={colors.TM8}
                         />
                         <LinkTemplate
                             urlLink='/line/TM10'
                             page="TM10"
-                            lineColor="#4b5563"
+                            lineColor={colors.TM10}
                         />
                     </div>
                 ) : (
@@ -166,7 +169,7 @@ const Navbar = () => {
                                     urlLink='/line/A11'
                                     page="A11"
                                     setIsMenuToggled={setIsMenuToggled}
-                                    lineColor='#ca8a04'
+                                    lineColor={colors.A11}
                                 />
 
 
@@ -174,14 +177,14 @@ const Navbar = () => {
                                     urlLink='/line/A111'
                                     page="A111"
                                     setIsMenuToggled={setIsMenuToggled}
-                                    lineColor="#dc2626"
+                                    lineColor={colors.A111}
                                 />
 
                                 <LinkMobileTemplate
                                     urlLink='/line/TB11'
                                     page="TB11"
                                     setIsMenuToggled={setIsMenuToggled}
-                                    lineColor="#ea580c"
+                                    lineColor={colors.TB11}
 
                                 />
 
@@ -190,7 +193,7 @@ const Navbar = () => {
                                     urlLink='/line/TM8'
                                     page="TM8"
                                     setIsMenuToggled={setIsMenuToggled}
-                                    lineColor="#6b21a8"
+                                    lineColor={colors.TM8}
 
                                 />
 
@@ -199,7 +202,7 @@ const Navbar = () => {
                                     urlLink='/line/TM10'
                                     page="TM10"
                                     setIsMenuToggled={setIsMenuToggled}
-                                    lineColor="#4b5563"
+                                    lineColor={colors.TM10}
                                 />
                             </motion.div>
                         </motion.div>

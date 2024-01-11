@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Circle, MapContainer, Polyline, Popup, TileLayer } from 'react-leaflet'
 import { Link, useNavigate } from 'react-router-dom'
 import { specificPolyline, allStationsCoords, specificStationName } from "../../utils";
+import { useSelector } from "react-redux";
 
 
 
@@ -76,7 +77,10 @@ function visualizeLineOnList(lineName, visibleLineBoolean, colors) {
 }
 
 
-const Home = ({ transportData, colors }) => {
+const Home = () => {
+
+    const transportData = useSelector((state)=> state.data.value)
+    const colors = useSelector((state)=> state.colors.value)
 
     const navigate = useNavigate()
 

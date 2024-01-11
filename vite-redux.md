@@ -6,8 +6,8 @@ In our case, we actually merely need to 'update' vite with the react-router-dom 
 
 
 Links aside from docs:
+[quick start redux](https://redux-toolkit.js.org/tutorials/quick-start) mind that you need redux-toolkit and react-redux both
 [redux](https://medium.com/@ishdagnesh/how-to-use-react-vite-js-with-redux-0aaf60835052)
 [tailwind](https://www.youtube.com/watch?v=3YNijcxYvPk)
-p
 [Multi-page, mind it is still SPA, no new fetches, just manipulate the DOM](https://www.youtube.com/watch?v=p8ZjHpMo-E4)
 [vite + react](https://medium.com/@galohernandez/vite-react-react-router-dom-the-latest-way-312ee887197e)

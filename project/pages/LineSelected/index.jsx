@@ -10,6 +10,7 @@ import { IoPersonSharp } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 
 import { specificPolyline, allStationsCoords, specificStationName, routeName, stopsNameAndCrowding, } from "../../utils";
+import { useSelector } from "react-redux";
 
 
 // visualize Map components
@@ -57,7 +58,10 @@ function visualizeCrowding(input){
 
 
 
-const Line = ({ transportData, colors }) => {
+const Line = () => {
+    const transportData = useSelector((state)=> state.data.value)
+    const colors = useSelector((state)=> state.colors.value)
+
     // easier toggle with Boolean
     const [routeA, setRouteA] = useState(true)
     let { id } = useParams();
