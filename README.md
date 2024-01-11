@@ -1,9 +1,5 @@
 # t-task
 
-## Data Approach
-
-![alt img](https://github.com/VasilGVasilev/t-task/blob/main/data-architecture.png)
-
 ## What's in the Stack
 
 - Vite
@@ -13,7 +9,6 @@
 - react-icons
 - Redux
 - Leaflet
-- Cypress
 
 
 ## Todos
@@ -26,12 +21,16 @@
 
 
 
-
 ### App logic
 - [X] "Fetch data" and store it in state
 - [X] Create basic index page - map and list divs
 - [X] Add leaflet for map div of main page
 - [X] Add actual lines on map and in list
-- [X] Make lines clickable
+- [X] Make lines on map clickable
+- [X] Make index page filter for bus/tram/trolley
 - [X] Create routes for each line
-- [ ] Make index page filter for bus/tram/trolley
+- [X] Create Navbar
+- [X] Add leaflet map for each line and line on that very map
+- [X] Create route toggle button
+- [X] Create a table with route details
+- [X] Make route a dynamic one so you have one template no matter if for 5 or 5000 lines.

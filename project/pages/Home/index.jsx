@@ -221,11 +221,3 @@ const Home = ({ transportData, colors }) => {
 export default Home;
 
 
-
-// transportData.map(element => {
-//     element.routes[0].segments.map(segment => {
-//         segment.coordinates.map(coordinate => {
-//             polyline.push([coordinate.lat, coordinate.lon])
-//         })
-//     })
-// })

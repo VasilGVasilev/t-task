@@ -33,36 +33,3 @@ function App() {
 export default App
 
 
-
-// possible merge of FE data and BE data into one state
-
-  // function updateArray(element, transportData, setTransportData, colorOptions) {
-
-  //   if (!element.hasOwnProperty('color')) {
-  //     if (colorOptions.hasOwnProperty(element.line)) {
-  
-  //       const indexToUpdate = transportData.findIndex(obj => obj.line === element.line);
-  
-  //       const newTransportData = [...transportData];
-  
-  //       newTransportData[indexToUpdate] = {
-  //         ...newTransportData[indexToUpdate],
-  //         color: colorOptions[element.line],
-  //       };
-  
-  //       setTransportData(newTransportData)
-  //     }
-  //   }
-  // }
-
-
-  // function App() {
-
-    // const [transportData, setTransportData] = useState(data);
-    // transportData.map(element => {
-    //   updateArray(element, transportData, setTransportData, colorOptions)
-    // })
-
-  // }
-
-
