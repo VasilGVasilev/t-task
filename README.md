@@ -17,7 +17,7 @@
 - [X] Choose framework -> Vite
 - [X] Config Tailwind
 - [X] Config react-router-dom -> to make it CSR
-- [ ] Config Redux
+- [X] Config Redux
 
 
 
