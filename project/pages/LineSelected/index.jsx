@@ -12,7 +12,6 @@ import { useParams } from "react-router-dom";
 import { specificPolyline, allStationsCoords, specificStationName, routeName, stopsNameAndCrowding, } from "../../utils";
 
 
-
 // visualize Map components
 
 function allStationsVisualised(lineName, transportData) {
@@ -37,7 +36,7 @@ function allStationsVisualised(lineName, transportData) {
     }))
 }
 
-
+// visualize Table components
 
 function visualizeCrowding(input){
 
@@ -57,6 +56,7 @@ function visualizeCrowding(input){
 }
 
 
+
 const Line = ({ transportData, colors }) => {
     // easier toggle with Boolean
     const [routeA, setRouteA] = useState(true)
@@ -66,6 +66,9 @@ const Line = ({ transportData, colors }) => {
     function handleClickChangeRoute() {
         setRouteA(!routeA)
     }
+
+    // center line map on average station coords -> if line has 10 stops -> 5th, if 20 -> 10th
+
 
 
     return (
@@ -78,6 +81,7 @@ const Line = ({ transportData, colors }) => {
                     <CgArrowsExchangeAltV className="text-white" size={50} />
                 </div>
                 <MapContainer
+                // props are immutable so cannot make dynamic centering of map for each line
                     center={[42.688334, 23.319941]}
                     zoom={12}
                     className='h-[50vh] w-full md:h-[85vh] z-20'

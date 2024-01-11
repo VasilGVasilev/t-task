@@ -15,23 +15,32 @@ import { AiOutlineClose } from 'react-icons/ai'
 const LinkMobileTemplate = ({ urlLink, page, setIsMenuToggled, lineColor }) => {
 
     return (
-        <div
-            style={{ "backgroundColor": lineColor }}
-            className="w-full h-auto p-2"
-        >
-            <Link
-                to={urlLink}
-                style={{ "color": "white" }}
+        <Link
+            to={urlLink}
+            style={{ "color": "white" }}
 
-                className={`w-full h-auto`}
-                onClick={() => {
-                    setIsMenuToggled(false);
-                }
-                }
+            className={`w-full h-auto`}
+            onClick={() => {
+                setIsMenuToggled(false);
+            }
+            }
+        >
+            <div
+                style={{ "backgroundColor": lineColor }}
+                className="w-full h-auto p-2"
             >
-                {page}
-            </Link>
-        </div>
+                <div
+
+                    style={{ "color": "white" }}
+
+                    className={`w-full h-auto`}
+
+                >
+                    {page}
+                </div>
+            </div>
+        </Link>
+
     );
 };
 
@@ -71,7 +80,7 @@ const Navbar = () => {
 
                 <Link className='saturate-200 duration-200 flex justify-center items-center h-14 w-20 sm:h-20 sm:w-32 text-xl 2xl:text-2xl text-black font-bold' to={'/'}>
 
-                    <img src="cgm.png" className=" h-10 w-10 sm:h-16 sm:w-16 rounded-full hover:saturate-200 transition duration-200" alt="" />
+                    <img src="/cgm.png" className=" h-10 w-10 sm:h-16 sm:w-16 rounded-full hover:saturate-200 transition duration-200" alt="" />
 
 
 
@@ -187,7 +196,7 @@ const Navbar = () => {
 
 
                                 <LinkMobileTemplate
-                                    urlLink='/TM10'
+                                    urlLink='/line/TM10'
                                     page="TM10"
                                     setIsMenuToggled={setIsMenuToggled}
                                     lineColor="#4b5563"

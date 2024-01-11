@@ -131,7 +131,7 @@ const Home = ({ transportData, colors }) => {
 
     return (
         <div className='grid grid-cols-1 md:grid-cols-5 justify-center items-center gap-5 m-5'>
-            <div className='w-90 h-full md:col-span-3 rounded-2xl '>
+            <div className='h-full md:col-span-3 rounded-2xl '>
                 <MapContainer
                     center={[42.688334, 23.319941]}
                     zoom={12}
@@ -164,7 +164,7 @@ const Home = ({ transportData, colors }) => {
 
                 </MapContainer>
             </div>
-            <div className="w-full h-full grid grid-rows-4 md:col-span-2 gap-5">
+            <div className=" grid grid-rows-4 md:col-span-2 gap-5 bg-slate-100 rounded-md">
                 <div className="row-start-1 row-end-2 flex flex-col justify-center items-center">
 
                     <div className="flex flex-row justify-center items-center text-white shadow-2xl rounded-xl cursor-pointer font-semibold md:text-3xl select-none">
@@ -193,7 +193,7 @@ const Home = ({ transportData, colors }) => {
 
                     </div>
                 </div>
-                <div className="row-start-2 row-end-4  flex flex-col justify-center items-center gap-3 ">
+                <div className="h-48 md:h-60 row-start-2 row-end-4 flex flex-col justify-center items-center gap-3 ">
 
                     {
                         visualizeLineOnList('A111', lineVisible.A111, colors)
