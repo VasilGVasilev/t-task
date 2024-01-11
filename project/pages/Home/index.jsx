@@ -84,7 +84,7 @@ function visualizeLineOnList(lineName, visibleLineBoolean, colors) {
                 <Link
                     className="w-5/6 h-auto flex flex-col justify-center items-start p-2 text-white font-semibold rounded-sm shadow-2xl"
                     style={{ backgroundColor: colors[lineName] }}
-                    to={lineName}
+                    to={`line/${lineName}`}
                 >
                     <div>
                         {lineName}
@@ -146,7 +146,7 @@ const Home = ({ transportData, colors }) => {
 
     // Handle clicks on LeafletMap
     function handleLineOnMapClick(lineName) {
-        navigate(lineName)
+        navigate(`line/${lineName}`)
     }
 
 

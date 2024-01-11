@@ -7,6 +7,8 @@ import { FaArrowDown } from "react-icons/fa";
 import { HiUserGroup } from "react-icons/hi2";
 import { FaUserGroup } from "react-icons/fa6";
 import { IoPersonSharp } from "react-icons/io5";
+import { useParams } from "react-router-dom";
+
 // FUNCTIONS OUTSIDE COMPONENTS TO BE RENDER EFFICIENT
 
 // visualizes Map specific
@@ -73,8 +75,10 @@ function visualizeCrowding(input){
     if(input === 'NaN'){
         return 'NaN'
     }
+
     let number = Math.ceil(Number(input))
-    if(number>5){
+
+    if(number > 5){
         return <HiUserGroup className="text-red-600" size={20}/>
     } else if(number >= 0){
         return <FaUserGroup className="text-yellow-600" size={20}/>
@@ -87,7 +91,8 @@ function visualizeCrowding(input){
 const Line = ({ transportData, colors }) => {
     // easier toggle with Boolean
     const [routeA, setRouteA] = useState(true)
-    const lineName = 'A11';
+    let { id } = useParams();
+    const lineName = id;
 
     function handleClickChangeRoute() {
         setRouteA(!routeA)
