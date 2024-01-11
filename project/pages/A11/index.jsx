@@ -130,10 +130,10 @@ const Line = ({ transportData, colors }) => {
 
                 <table className="h-full w-full">
                     <thead>
-                        <tr>
+                        <tr className="">
                             <th className="px-3 text-left bg-ptskyBlue text-white">{routeName(lineName, transportData, routeA)}</th>
                             <th className="px-3 text-left bg-ptskyBlue text-white">Натовареност</th>
-                            <th className="px-3 text-left bg-ptskyBlue text-white">Посока</th>
+                            <th className="px-3 text-left bg-ptskyBlue text-white"><FaArrowDown /></th>
                         </tr>
                     </thead>
                     <tbody className="">
@@ -141,10 +141,10 @@ const Line = ({ transportData, colors }) => {
                             stopsNameAndCrowding(lineName, transportData, routeA).map((stop, index) => {
                                 return (
 
-                                    <tr key={index}>
-                                        <td className="p-3">{stop.name}</td>
-                                        <td className="p-3">{visualizeCrowding(stop.averagePeople)}</td>
-                                        <td className="p-3"><FaArrowDown /></td>
+                                    <tr className="bg-blue-100 even:bg-slate-100" key={index}>
+                                        <td className="p-3 text-left">{stop.name}</td>
+                                        <td className="p-3 flex flex-row justify-center items-center">{visualizeCrowding(stop.averagePeople)}</td>
+                                        <td className="p-3 "><FaArrowDown /></td>
                                     </tr>
                                 )
                             })
