@@ -2,29 +2,8 @@ import "leaflet/dist/leaflet.css"
 import { useState } from "react";
 import { Circle, MapContainer, Polyline, Popup, TileLayer } from 'react-leaflet'
 import { Link, useNavigate } from 'react-router-dom'
+import { specificPolyline, allStationsCoords, specificStationName } from "../../utils";
 
-// FUNCTIONS OUTSIDE COMPONENTS TO BE RENDER EFFICIENT
-
-// visualizes specific
-
-function specificPolyline(lineName, transportData) {
-    let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
-    return transportData[indexOfSpecificLine].routes[0].segments.reduce((accumulator, segment) => {
-        return accumulator.concat(segment.coordinates.map(coordinate => [coordinate.lat, coordinate.lon], { offset: 5 }));
-    }, []);
-}
-
-function allStationsCoords(lineName, transportData) {
-    let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
-    return transportData[indexOfSpecificLine].routes[0].stops.map(stop => [stop.location.lat, stop.location.lon])
-
-}
-
-function specificStationName(lineName, index, transportData) {
-    let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
-    return transportData[indexOfSpecificLine].routes[0].stops[index].name
-
-}
 
 
 // visualize components

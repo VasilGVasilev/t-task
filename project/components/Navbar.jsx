@@ -12,55 +12,37 @@ import { AiOutlineClose } from 'react-icons/ai'
 
 
 
-const container = {
-    hidden: {},
-    visible: {
-        transition: {
-            staggerChildren: 0.3,
-        },
-    },
-};
-
-const navbarVariant = {
-    hidden: { opacity: 0, x: 100 },
-    visible: { opacity: 1, x: 0 },
-};
-
 const LinkMobileTemplate = ({ urlLink, page, setIsMenuToggled, lineColor }) => {
-    const location = useLocation()
 
     return (
-        <motion.div
-            variants={navbarVariant}
-            viewport={{ once: true }}
-            style={{"backgroundColor": "white"}}
-            className="w-full h-auto p-5"
+        <div
+            style={{ "backgroundColor": lineColor }}
+            className="w-full h-auto p-2"
         >
             <Link
                 to={urlLink}
-                style={{"color": lineColor}}
+                style={{ "color": "white" }}
 
-                className={`${location.pathname === urlLink ? "text-black font-extrabold" : "text-black"
-                    }  font-bold transition duration-300 w-full h-auto`}
+                className={`w-full h-auto`}
                 onClick={() => {
                     setIsMenuToggled(false);
                 }
                 }
             >
-
                 {page}
             </Link>
-        </motion.div>
+        </div>
     );
 };
 
-const LinkTemplate = ({ urlLink, page }) => {
+const LinkTemplate = ({ urlLink, page, lineColor }) => {
     const location = useLocation();
+    let lineColorSelected = location.pathname == urlLink ? lineColor : ''
     return (
         <Link
             to={urlLink}
-            className={`${location.pathname == urlLink ? "text-[#142D55]" : "text-black"
-                }  transition duration-200 hover:text-ptskyBlue`}
+            style={{ backgroundColor: lineColorSelected }}
+            className={`py-5 px-1`}
         >
             {page}
         </Link>
@@ -99,24 +81,29 @@ const Navbar = () => {
                     <div className={`text-xl 2xl:text-2xl flex justify-between gap-10 2xl:gap-16 font-semibold`}>
 
                         <LinkTemplate
-                            urlLink='/A11'
+                            urlLink='/line/A11'
                             page="A11"
+                            lineColor='#ca8a04'
                         />
                         <LinkTemplate
-                            urlLink='/A111'
+                            urlLink='/line/A111'
                             page="A111"
+                            lineColor="#dc2626"
                         />
                         <LinkTemplate
-                            urlLink='/TB11'
+                            urlLink='/line/TB11'
                             page="TB11"
+                            lineColor="#ea580c"
                         />
                         <LinkTemplate
-                            urlLink='/TM8'
+                            urlLink='/line/TM8'
                             page="TM8"
+                            lineColor="#6b21a8"
                         />
                         <LinkTemplate
-                            urlLink='/TM10'
+                            urlLink='/line/TM10'
                             page="TM10"
+                            lineColor="#4b5563"
                         />
                     </div>
                 ) : (
@@ -160,52 +147,51 @@ const Navbar = () => {
                             {/* MENU ITEMS */}
                             <motion.div
                                 className="flex flex-col gap-10 ml-[33%] text-2xl text-white"
-                                variants={container}
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true, amount: 0.2 }}
                             >
 
 
-                                    <LinkMobileTemplate
-                                        urlLink='/A11'
-                                        page="A11"
-                                        setIsMenuToggled={setIsMenuToggled}
-                                        lineColor='#ca8a04'
-                                    />
+                                <LinkMobileTemplate
+                                    urlLink='/line/A11'
+                                    page="A11"
+                                    setIsMenuToggled={setIsMenuToggled}
+                                    lineColor='#ca8a04'
+                                />
 
 
-                                    <LinkMobileTemplate
-                                        urlLink='/A111'
-                                        page="A111"
-                                        setIsMenuToggled={setIsMenuToggled}
-                                        lineColor="#dc2626"
-                                    />
+                                <LinkMobileTemplate
+                                    urlLink='/line/A111'
+                                    page="A111"
+                                    setIsMenuToggled={setIsMenuToggled}
+                                    lineColor="#dc2626"
+                                />
 
-                                    <LinkMobileTemplate
-                                        urlLink='/TB11'
-                                        page="TB11"
-                                        setIsMenuToggled={setIsMenuToggled}
-                                        lineColor="#ea580c"
+                                <LinkMobileTemplate
+                                    urlLink='/line/TB11'
+                                    page="TB11"
+                                    setIsMenuToggled={setIsMenuToggled}
+                                    lineColor="#ea580c"
 
-                                    />
+                                />
 
 
-                                    <LinkMobileTemplate
-                                        urlLink='/TM8'
-                                        page="TM8"
-                                        setIsMenuToggled={setIsMenuToggled}
-                                        lineColor="#6b21a8"
+                                <LinkMobileTemplate
+                                    urlLink='/line/TM8'
+                                    page="TM8"
+                                    setIsMenuToggled={setIsMenuToggled}
+                                    lineColor="#6b21a8"
 
-                                    />
- 
+                                />
 
-                                    <LinkMobileTemplate
-                                        urlLink='/TM10'
-                                        page="TM10"
-                                        setIsMenuToggled={setIsMenuToggled}
-                                        lineColor="#4b5563"
-                                    />
+
+                                <LinkMobileTemplate
+                                    urlLink='/TM10'
+                                    page="TM10"
+                                    setIsMenuToggled={setIsMenuToggled}
+                                    lineColor="#4b5563"
+                                />
                             </motion.div>
                         </motion.div>
                     </div>

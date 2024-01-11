@@ -9,28 +9,8 @@ import { FaUserGroup } from "react-icons/fa6";
 import { IoPersonSharp } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 
-// FUNCTIONS OUTSIDE COMPONENTS TO BE RENDER EFFICIENT
+import { specificPolyline, allStationsCoords, specificStationName, routeName, stopsNameAndCrowding, } from "../../utils";
 
-// visualizes Map specific
-
-function specificPolyline(lineName, transportData) {
-    let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
-    return transportData[indexOfSpecificLine].routes[0].segments.reduce((accumulator, segment) => {
-        return accumulator.concat(segment.coordinates.map(coordinate => [coordinate.lat, coordinate.lon], { offset: 5 }));
-    }, []);
-}
-
-function allStationsCoords(lineName, transportData) {
-    let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
-    return transportData[indexOfSpecificLine].routes[0].stops.map(stop => [stop.location.lat, stop.location.lon])
-
-}
-
-function specificStationName(lineName, index, transportData) {
-    let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
-    return transportData[indexOfSpecificLine].routes[0].stops[index].name
-
-}
 
 
 // visualize Map components
@@ -57,18 +37,7 @@ function allStationsVisualised(lineName, transportData) {
     }))
 }
 
-// visualize Table components
 
-function routeName(lineName, transportData, routeA) {
-    let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
-    return transportData[indexOfSpecificLine].routes[routeA ? 0 : 1].name
-}
-
-function stopsNameAndCrowding(lineName, transportData, routeA) {
-    let indexOfSpecificLine = transportData.findIndex(obj => obj.line === lineName);
-    return transportData[indexOfSpecificLine].routes[routeA ? 0 : 1].stops.map(e => ({name: e.name, averagePeople: e.averagePeople}))
-
-}
 
 function visualizeCrowding(input){
 
@@ -103,7 +72,7 @@ const Line = ({ transportData, colors }) => {
         <div className="flex flex-col justify-center items-center gap-10">
             <div className="relative h-full w-full flex flex-col justify-center items-center">
                 <div
-                    className="absolute -bottom-8 z-50 p-3 rounded-full bg-ptskyBlue hover:bg-ptdarkBlue cursor-pointer"
+                    className="absolute -bottom-8 z-30 p-3 rounded-full bg-ptskyBlue hover:bg-ptdarkBlue cursor-pointer"
                     onClick={handleClickChangeRoute}
                 >
                     <CgArrowsExchangeAltV className="text-white" size={50} />
