@@ -6,13 +6,8 @@ import NoPage from "../pages/NoPage";
 import LineSelected from "../pages/LineSelected";
 
 
-import colorOptions from '../../DB/colorOptions.json'
-import { useState } from "react";
-
-
 
 function App() {
-  const [colors, setColors] = useState(colorOptions);
 
   return (
     <BrowserRouter>
