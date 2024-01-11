@@ -100,7 +100,7 @@ const Home = ({ transportData, colors }) => {
                     visibleLineBoolean
                     &&
                     <Link
-                        className="w-5/6 h-auto flex flex-col justify-center items-start p-2 rounded-sm"
+                        className="w-5/6 h-auto flex flex-col justify-center items-start p-2 text-white font-semibold rounded-sm shadow-2xl"
                         style={{ backgroundColor: colors[lineName] }}
                         to={lineName}
                     >
@@ -186,7 +186,7 @@ const Home = ({ transportData, colors }) => {
             <div className="w-full h-full grid grid-rows-4 md:col-span-2 gap-5">
                 <div className="row-start-1 row-end-2 flex flex-col justify-center items-center">
 
-                    <div className="flex flex-row justify-center items-center text-white shadow-2xl rounded-xl cursor-pointer font-bold md:text-3xl select-none">
+                    <div className="flex flex-row justify-center items-center text-white shadow-2xl rounded-xl cursor-pointer font-semibold md:text-3xl select-none">
                         <div
                             style={{ backgroundColor: isFilterClicked['A'] ? '#0032AA' : '#00BAFC' }}
                             className="text-center rounded-l-md border-r-[1px] border-white py-3 pl-5 pr-3 "
@@ -211,7 +211,7 @@ const Home = ({ transportData, colors }) => {
 
                     </div>
                 </div>
-                <div className="row-start-2 row-end-4  flex flex-col justify-center items-center gap-1">
+                <div className="row-start-2 row-end-4  flex flex-col justify-center items-center gap-3 ">
 
                     {
                         visualizeLineOnList('A111', lineVisible.A111)
