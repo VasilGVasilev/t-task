@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  posts: [],
+  data: [],
   status: 'idle',
   error: null
 }
@@ -26,7 +26,7 @@ export const counterSlice = createSlice({
       .addCase(fetchData.fulfilled, (state, action) => {
         state.status = 'succeeded'
         // Add any fetched posts to the array
-        state.posts = state.posts.concat(action.payload)
+        state.data = state.data.concat(action.payload)
       })
       .addCase(fetchData.rejected, (state, action) => {
         state.status = 'failed'

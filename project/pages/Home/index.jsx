@@ -1,10 +1,9 @@
 import "leaflet/dist/leaflet.css"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Circle, MapContainer, Polyline, Popup, TileLayer } from 'react-leaflet'
 import { Link, useNavigate } from 'react-router-dom'
 import { specificPolyline, allStationsCoords, specificStationName } from "../../utils";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchData } from "../../src/store/sliceData";
+import { useSelector } from "react-redux";
 
 
 
@@ -79,11 +78,15 @@ function visualizeLineOnList(lineName, visibleLineBoolean, colors) {
 
 
 const Home = () => {
-    const dispatch = useDispatch()
-    const transportData = useSelector((state) => state.data.posts)
+
+    const transportData = useSelector((state) => state.data.data)
     const dataStatus = useSelector(state => state.data.status)
-    console.log(transportData);
-    const colors = useSelector((state) => state.colors.value)
+    const errorData = useSelector(state => state.data.error)
+
+    const colors = useSelector((state) => state.colors.colors)
+    const colorsStatus = useSelector(state => state.colors.status)
+    const errorColors = useSelector(state => state.colors.error)
+
 
     const navigate = useNavigate()
 
@@ -134,18 +137,13 @@ const Home = () => {
         navigate(`line/${lineName}`)
     }
 
-    // REdux dispatch
-    useEffect(() => {
-        if (dataStatus === 'idle') {
-            dispatch(fetchData())
-        }
-    }, [dataStatus, dispatch])
+
 
     let content
 
-    if (dataStatus === 'loading') {
+    if (dataStatus === 'loading' && colorsStatus === 'loading') {
         content = <div>Loading...</div>
-    } else if (dataStatus === 'succeeded') {
+    } else if (dataStatus === 'succeeded' && colorsStatus === 'succeeded') {
         // Sort posts in reverse chronological order by datetime string
         return (
             <div className='grid grid-cols-1 md:grid-cols-5 justify-center items-center gap-5 m-5'>
@@ -234,8 +232,8 @@ const Home = () => {
                 </div>
             </div>
         )
-    } else if (dataStatus === 'failed') {
-        content = <div>Error Bad Request</div>
+    } else if (dataStatus === 'failed' && colorsStatus === 'failed') {
+        content = <div>{errorData}{errorColors}</div>
     }
 
 };
