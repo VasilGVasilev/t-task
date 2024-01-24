@@ -1,6 +1,6 @@
 import "leaflet/dist/leaflet.css"
 import { useState } from "react";
-import { Circle, MapContainer, Polyline, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Polyline, TileLayer } from "react-leaflet";
 
 import { CgArrowsExchangeAltV } from "react-icons/cg";
 import { FaArrowDown } from "react-icons/fa";
@@ -9,33 +9,11 @@ import { FaUserGroup } from "react-icons/fa6";
 import { IoPersonSharp } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 
-import { specificPolyline, allStationsCoords, specificStationName, routeName, stopsNameAndCrowding, } from "../../utils";
+import { specificPolyline, routeName, stopsNameAndCrowding, AllStationsVisualized, } from "../../utils";
 import { useSelector } from "react-redux";
 
 
-// visualize Map components
 
-function allStationsVisualised(lineName, transportData) {
-
-    return (allStationsCoords(lineName, transportData).map((coords, index) => {
-        return (
-
-            <Circle
-                center={coords}
-                pathOptions={{ color: "black", fillColor: "white", fillOpacity: 1 }}
-                radius={20}
-                key={index}
-            >
-                <Popup
-                >
-                    {specificStationName(lineName, index, transportData)}
-                </Popup>
-            </Circle>
-
-        )
-
-    }))
-}
 
 // visualize Table components
 
@@ -107,7 +85,7 @@ const Line = () => {
                             positions={specificPolyline(lineName, transportData)}
 
                         />
-                        {allStationsVisualised(lineName, transportData)}
+                        {AllStationsVisualized(lineName, transportData)}
 
 
                         <TileLayer

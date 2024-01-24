@@ -1,37 +1,15 @@
 import "leaflet/dist/leaflet.css"
 import React, { useState } from "react";
-import { Circle, MapContainer, Polyline, Popup, TileLayer } from 'react-leaflet'
+import { MapContainer, Polyline, TileLayer } from 'react-leaflet'
 import { Link, useNavigate } from 'react-router-dom'
-import { specificPolyline, allStationsCoords, specificStationName } from "../../utils";
+import { specificPolyline, AllStationsVisualized } from "../../utils";
 import { useSelector } from "react-redux";
 
 
 
-// visualize components
 
-function allStationsVisualized(lineName, transportData) {
 
-    return (allStationsCoords(lineName, transportData).map((coords, index) => {
-        return (
-
-            <Circle
-                center={coords}
-                pathOptions={{ color: "black", fillColor: "white", fillOpacity: 1 }}
-                radius={20}
-                key={index}
-            >
-                <Popup
-                >
-                    {specificStationName(lineName, index, transportData)}
-                </Popup>
-            </Circle>
-
-        )
-
-    }))
-}
-
-function visualizeLineOnMap(lineName, visibleLineBoolean, transportData, colors, handleLineOnMapClick) {
+const VisualizeLineOnMap = (lineName, visibleLineBoolean, transportData, colors, handleLineOnMapClick) => {
     return (
 
         <>
@@ -46,7 +24,7 @@ function visualizeLineOnMap(lineName, visibleLineBoolean, transportData, colors,
                             click: () => handleLineOnMapClick(lineName)
                         }}
                     />
-                    {allStationsVisualized(lineName, transportData)}
+                    {AllStationsVisualized(lineName, transportData)}
                 </>
 
             }
@@ -55,7 +33,7 @@ function visualizeLineOnMap(lineName, visibleLineBoolean, transportData, colors,
     )
 }
 
-function visualizeLineOnList(lineName, visibleLineBoolean, colors) {
+const VisualizeLineOnList = (lineName, visibleLineBoolean, colors) => {
     return (
         <>
             {
@@ -120,16 +98,13 @@ const Home = () => {
             ...prevState,
             [typeOfTrans]: !prevState[typeOfTrans]
         }))
-        const arrBuses = []
-        transportData.map(element => {
-            if (element.routes[0]["transportType"] === typeOfTrans) {
-                arrBuses.push(element.line)
-            }
 
+        transportData.filter(element => {
+            return element.routes[0]["transportType"] === typeOfTrans
+        }).forEach(element => {
+            changeLineVisibility(element.line)
         })
-        arrBuses.map(bus => {
-            changeLineVisibility(bus)
-        })
+
     }
 
     // Handle clicks on LeafletMap
@@ -137,10 +112,6 @@ const Home = () => {
         navigate(`line/${lineName}`)
     }
 
-    Object.keys(lineVisible).map((lineName) => {
-
-        console.log(lineName, lineVisible[lineName])
-    })
 
 
     let content
@@ -164,8 +135,7 @@ const Home = () => {
 
                                     <React.Fragment key={lineName}>
                                         {
-
-                                            visualizeLineOnMap(lineName, lineVisible[lineName], transportData, colors, handleLineOnMapClick)
+                                            VisualizeLineOnMap(lineName, lineVisible[lineName], transportData, colors, handleLineOnMapClick)
                                         }
                                     </React.Fragment>
                                 )
@@ -219,8 +189,7 @@ const Home = () => {
 
                                     <React.Fragment key={lineName}>
                                         {
-
-                                            visualizeLineOnList(lineName, lineVisible[lineName], colors)
+                                            VisualizeLineOnList(lineName, lineVisible[lineName], colors)
                                         }
                                     </React.Fragment>
                                 )
