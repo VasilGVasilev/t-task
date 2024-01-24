@@ -54,8 +54,6 @@ const Line = () => {
     const [routeA, setRouteA] = useState(true)
     let { id } = useParams();
     const lineName = id;
-    const routes = transportData.find(line => line.line == lineName).routes
-
     // Handle toggle route
     function handleClickChangeRoute() {
         setRouteA(!routeA)
@@ -68,6 +66,8 @@ const Line = () => {
         content = <div>Loading...</div>
     } else if (dataStatus === 'succeeded' && colorsStatus === 'succeeded') {
         // Sort posts in reverse chronological order by datetime string
+        const routes = transportData.find(line => line.line == lineName).routes
+
         return (
             <div className="flex flex-col justify-center items-center gap-10">
                 <div className="relative h-full w-full flex flex-col justify-center items-center">
