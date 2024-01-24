@@ -84,6 +84,8 @@ const Line = () => {
                         className='h-[50vh] w-full md:h-[85vh] z-20'
                         scrollWheelZoom={false}
                     >
+                        {/* why not forEach but map -> forEach is used for side effects, while map actaully returns an array */}
+
                         {
                             routes.map((element, currentRoute) => {
                                 return (

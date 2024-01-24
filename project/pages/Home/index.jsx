@@ -145,6 +145,7 @@ const Home = () => {
                         className='h-[50vh] w-full md:h-[85vh] rounded-2xl z-20'
                         scrollWheelZoom={false}
                     >
+                        {/* why not forEach but map -> forEach is used for side effects, while map actaully returns an array */}
                         {
                             Object.keys(lineVisible).map((lineName) => {
                                 return (
@@ -199,6 +200,8 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="h-48 md:h-60 row-start-2 row-end-4 flex flex-col justify-center items-center gap-3 ">
+                        {/* why not forEach but map -> forEach is used for side effects, while map actaully returns an array */}
+
                         {
                             Object.keys(lineVisible).map((lineName) => {
                                 return (
