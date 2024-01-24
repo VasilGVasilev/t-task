@@ -66,7 +66,6 @@ const Line = () => {
         content = <div>Loading...</div>
     } else if (dataStatus === 'succeeded' && colorsStatus === 'succeeded') {
         // Sort posts in reverse chronological order by datetime string
-        const routes = transportData.find(line => line.line == lineName).routes
 
         return (
             <div className="flex flex-col justify-center items-center gap-10">
@@ -86,23 +85,12 @@ const Line = () => {
                     >
                         {/* why not forEach but map -> forEach is used for side effects, while map actaully returns an array */}
 
-                        {
-                            routes.map((element, currentRoute) => {
-                                return (
+                        <Polyline
+                            pathOptions={{ color: colors[lineName], weight: 3 }}
+                            positions={specificPolyline(lineName, transportData, routeA ? 0 : 1)}
 
-                                    <React.Fragment key={element.id}>
-                                        <Polyline
-                                            pathOptions={{ color: colors[lineName], weight: 3 }}
-                                            positions={specificPolyline(lineName, transportData, currentRoute)}
-
-                                        />
-                                        {AllStationsVisualized(lineName, transportData, currentRoute)}
-                                    </React.Fragment>
-                                )
-
-
-                            })
-                        }
+                        />
+                        {AllStationsVisualized(lineName, transportData, routeA ? 0 : 1)}
 
 
                         <TileLayer
