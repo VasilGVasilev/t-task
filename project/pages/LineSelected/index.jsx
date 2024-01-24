@@ -1,5 +1,5 @@
 import "leaflet/dist/leaflet.css"
-import { useState } from "react";
+import React, { useState } from "react";
 import { MapContainer, Polyline, TileLayer } from "react-leaflet";
 
 import { CgArrowsExchangeAltV } from "react-icons/cg";
@@ -9,7 +9,9 @@ import { FaUserGroup } from "react-icons/fa6";
 import { IoPersonSharp } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 
-import { specificPolyline, routeName, stopsNameAndCrowding, AllStationsVisualized, } from "../../utils";
+import { AllStationsVisualized, } from "../../utils/index";
+import { specificPolyline, routeName, stopsNameAndCrowding, } from "../../utils/arrays";
+
 import { useSelector } from "react-redux";
 
 
@@ -48,9 +50,11 @@ const Line = () => {
     const errorColors = useSelector(state => state.colors.error)
 
     // Easier toggle with Boolean based on being or not being route A
+
     const [routeA, setRouteA] = useState(true)
     let { id } = useParams();
     const lineName = id;
+    const routes = transportData.find(line => line.line == lineName).routes
 
     // Handle toggle route
     function handleClickChangeRoute() {
@@ -80,12 +84,23 @@ const Line = () => {
                         className='h-[50vh] w-full md:h-[85vh] z-20'
                         scrollWheelZoom={false}
                     >
-                        <Polyline
-                            pathOptions={{ color: colors[lineName], weight: 6 }}
-                            positions={specificPolyline(lineName, transportData)}
+                        {
+                            routes.map((element, currentRoute) => {
+                                return (
 
-                        />
-                        {AllStationsVisualized(lineName, transportData)}
+                                    <React.Fragment key={element.id}>
+                                        <Polyline
+                                            pathOptions={{ color: colors[lineName], weight: 3 }}
+                                            positions={specificPolyline(lineName, transportData, currentRoute)}
+
+                                        />
+                                        {AllStationsVisualized(lineName, transportData, currentRoute)}
+                                    </React.Fragment>
+                                )
+
+
+                            })
+                        }
 
 
                         <TileLayer

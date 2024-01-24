@@ -2,14 +2,19 @@ import "leaflet/dist/leaflet.css"
 import React, { useState } from "react";
 import { MapContainer, Polyline, TileLayer } from 'react-leaflet'
 import { Link, useNavigate } from 'react-router-dom'
-import { specificPolyline, AllStationsVisualized } from "../../utils";
+import { specificPolyline } from "../../utils/arrays";
+import { AllStationsVisualized } from "../../utils/index";
+
+
 import { useSelector } from "react-redux";
 
 
 
 
 
-const VisualizeLineOnMap = (lineName, visibleLineBoolean, transportData, colors, handleLineOnMapClick) => {
+const VisualizeLinesOnMap = (lineName, visibleLineBoolean, transportData, colors, handleLineOnMapClick) => {
+
+    const routes = transportData.find(line => line.line == lineName).routes
     return (
 
         <>
@@ -17,14 +22,25 @@ const VisualizeLineOnMap = (lineName, visibleLineBoolean, transportData, colors,
                 visibleLineBoolean
                 &&
                 <>
-                    <Polyline
-                        pathOptions={{ color: colors[lineName], weight: 6 }}
-                        positions={specificPolyline(lineName, transportData)}
-                        eventHandlers={{
-                            click: () => handleLineOnMapClick(lineName)
-                        }}
-                    />
-                    {AllStationsVisualized(lineName, transportData)}
+                    {
+                        routes.map((element, currentRoute) => {
+                            return (
+                                <React.Fragment key={element.id}>
+                                    <Polyline
+                                        pathOptions={{ color: colors[lineName], weight: 3 }}
+                                        positions={specificPolyline(lineName, transportData, currentRoute)}
+                                        eventHandlers={{
+                                            click: () => handleLineOnMapClick(lineName)
+                                        }}
+                                    />
+                                    {AllStationsVisualized(lineName, transportData, currentRoute)}
+
+                                </React.Fragment>
+                            )
+
+                        })
+                    }
+
                 </>
 
             }
@@ -135,7 +151,7 @@ const Home = () => {
 
                                     <React.Fragment key={lineName}>
                                         {
-                                            VisualizeLineOnMap(lineName, lineVisible[lineName], transportData, colors, handleLineOnMapClick)
+                                            VisualizeLinesOnMap(lineName, lineVisible[lineName], transportData, colors, handleLineOnMapClick)
                                         }
                                     </React.Fragment>
                                 )
