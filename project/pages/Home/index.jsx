@@ -1,5 +1,5 @@
 import "leaflet/dist/leaflet.css"
-import { useState } from "react";
+import React, { useState } from "react";
 import { Circle, MapContainer, Polyline, Popup, TileLayer } from 'react-leaflet'
 import { Link, useNavigate } from 'react-router-dom'
 import { specificPolyline, allStationsCoords, specificStationName } from "../../utils";
@@ -95,8 +95,8 @@ const Home = () => {
         A111: true,
         A11: true,
         TB11: true,
+        TM10: true,
         TM8: true,
-        TM10: true
     })
 
     const [isFilterClicked, setIsFilterClicked] = useState({
@@ -137,6 +137,10 @@ const Home = () => {
         navigate(`line/${lineName}`)
     }
 
+    Object.keys(lineVisible).map((lineName) => {
+
+        console.log(lineName, lineVisible[lineName])
+    })
 
 
     let content
@@ -154,22 +158,21 @@ const Home = () => {
                         className='h-[50vh] w-full md:h-[85vh] rounded-2xl z-20'
                         scrollWheelZoom={false}
                     >
-                        {/* this has to be manual due to TM8 and T10 overlapping in natural order of DB */}
                         {
-                            visualizeLineOnMap('A111', lineVisible.A111, transportData, colors, handleLineOnMapClick)
+                            Object.keys(lineVisible).map((lineName) => {
+                                return (
+
+                                    <React.Fragment key={lineName}>
+                                        {
+
+                                            visualizeLineOnMap(lineName, lineVisible[lineName], transportData, colors, handleLineOnMapClick)
+                                        }
+                                    </React.Fragment>
+                                )
+
+                            })
                         }
-                        {
-                            visualizeLineOnMap('A11', lineVisible.A11, transportData, colors, handleLineOnMapClick)
-                        }
-                        {
-                            visualizeLineOnMap('TB11', lineVisible.TB11, transportData, colors, handleLineOnMapClick)
-                        }
-                        {
-                            visualizeLineOnMap('TM10', lineVisible.TM10, transportData, colors, handleLineOnMapClick)
-                        }
-                        {
-                            visualizeLineOnMap('TM8', lineVisible.TM8, transportData, colors, handleLineOnMapClick)
-                        }
+
 
 
                         <TileLayer
@@ -210,22 +213,21 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="h-48 md:h-60 row-start-2 row-end-4 flex flex-col justify-center items-center gap-3 ">
+                        {
+                            Object.keys(lineVisible).map((lineName) => {
+                                return (
 
-                        {
-                            visualizeLineOnList('A111', lineVisible.A111, colors)
+                                    <React.Fragment key={lineName}>
+                                        {
+
+                                            visualizeLineOnList(lineName, lineVisible[lineName], colors)
+                                        }
+                                    </React.Fragment>
+                                )
+
+                            })
                         }
-                        {
-                            visualizeLineOnList('A11', lineVisible.A11, colors)
-                        }
-                        {
-                            visualizeLineOnList('TB11', lineVisible.TB11, colors)
-                        }
-                        {
-                            visualizeLineOnList('TM10', lineVisible.TM10, colors)
-                        }
-                        {
-                            visualizeLineOnList('TM8', lineVisible.TM8, colors)
-                        }
+
 
                     </div>
 
