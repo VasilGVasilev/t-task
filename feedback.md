@@ -11,6 +11,8 @@ Namely, instead of calculating coords on each render of a component that needs c
 Entails having data extracted from state in a ready to use cache
 Solution: instead of traversing though the data with my functions that return an array with coords or names, apply useMemo() hook to extract this data in a ready to be used array. Instead I put the function that returns an array directly in the component that relied on the information, thus, making the calculations happen on each render, ex. clicking in between lines.
 
+[see also](https://blog.logrocket.com/optimizing-performance-react-app/)
+
 BUT given React Forget pending update, caching may be an overhead of the [past](https://medium.com/rewrite-tech/what-is-react-forget-00fdd742636c)
 
 3. Parent re-render re-renders children if not stopped via React.memo()

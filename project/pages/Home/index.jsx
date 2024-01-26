@@ -1,75 +1,15 @@
 import "leaflet/dist/leaflet.css"
-import React, { memo, useMemo, useState } from "react";
-import { MapContainer, Polyline, TileLayer } from 'react-leaflet'
-import { Link, useNavigate } from 'react-router-dom'
-import { specificPolyline } from "../../utils/arrays";
-import { AllStationsVisualized } from "../../utils/index";
+import { useMemo, useState } from "react";
+import { MapContainer, TileLayer } from 'react-leaflet'
+import { useNavigate } from 'react-router-dom'
 
 
 import { useSelector } from "react-redux";
+import { VisualizeLinesOnMap } from "./VisualizeLinesOnMap";
+import { VisualizeLineOnList } from "./VisualizeLineOnList";
 
 
 
-
-
-const VisualizeLinesOnMap = memo(function VisualizeLinesOnMap({ lineName, visibleLineBoolean, transportData, colors, handleLineOnMapClick }) {
-
-    const routes = transportData.find(line => line.line == lineName).routes
-    const memoizedPositions = useMemo(() => routes.map((element, currentRoute) => specificPolyline(lineName, transportData, currentRoute)), [lineName, transportData]);
-    return (
-
-        <>
-            {
-                visibleLineBoolean
-                &&
-                <>
-                    {
-                        memoizedPositions.map((coordinates, index) => {
-                            return (
-                                <React.Fragment key={index}>
-                                    <Polyline
-                                        pathOptions={{ color: colors[lineName], weight: 3 }}
-                                        positions={coordinates}
-                                        eventHandlers={{
-                                            click: () => handleLineOnMapClick(lineName)
-                                        }}
-                                    />
-                                    {AllStationsVisualized(lineName, transportData, index)}
-
-                                </React.Fragment>
-                            )
-
-                        })
-                    }
-
-                </>
-
-            }
-        </>
-
-    )
-})
-
-const VisualizeLineOnList = memo(function VisualizeLineOnList({ lineName, visibleLineBoolean, colors }) {
-    return (
-        <>
-            {
-                visibleLineBoolean
-                &&
-                <Link
-                    className="w-5/6 h-auto flex flex-col justify-center items-start p-2 text-white font-semibold rounded-sm shadow-2xl"
-                    style={{ backgroundColor: colors[lineName] }}
-                    to={`line/${lineName}`}
-                >
-                    <div>
-                        {lineName}
-                    </div>
-                </Link>
-
-            }
-        </>
-    )
-})
 
 
 const Home = () => {
@@ -84,6 +24,14 @@ const Home = () => {
 
 
     const navigate = useNavigate()
+    // Redux state cache
+
+    const linesNames = useMemo(() => {
+        if (dataStatus === 'succeeded' && colorsStatus === 'succeeded') {
+            return transportData.map(line => line.line);
+        }
+        return [];
+    }, [transportData]);
 
     // local states
     const [lineVisible, setLineVisible] = useState({
@@ -148,7 +96,7 @@ const Home = () => {
                     >
                         {/* why not forEach but map -> forEach is used for side effects, while map actaully returns an array */}
                         {
-                            Object.keys(lineVisible).map((lineName) => {
+                            linesNames.map((lineName) => {
                                 return (
 
                                     <VisualizeLinesOnMap
@@ -208,14 +156,13 @@ const Home = () => {
                         {/* why not forEach but map -> forEach is used for side effects, while map actaully returns an array */}
 
                         {
-                            Object.keys(lineVisible).map((lineName) => {
+                            linesNames.map((lineName) => {
                                 return (
 
                                     <VisualizeLineOnList
                                         key={lineName}
                                         lineName={lineName}
                                         visibleLineBoolean={lineVisible[lineName]}
-                                        colors={colors}
                                     >
                                     </VisualizeLineOnList>
                                 )

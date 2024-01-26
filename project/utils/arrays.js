@@ -6,8 +6,8 @@ export function specificPolyline(lineName, transportData, currentRoute) {
     }, []);
 }
 
-export function allStationsCoords(lineName, transportData, currentRoute) {
-    return transportData.find(obj => obj.line === lineName).routes[currentRoute].stops.map(stop => [stop.location.lat, stop.location.lon])
+export function allStationsCoordsAndName(lineName, transportData, currentRoute) {
+    return transportData.find(obj => obj.line === lineName).routes[currentRoute].stops.map(stop => ({name: stop.name, lat: stop.location.lat, lon: stop.location.lon}))
 
 }
 

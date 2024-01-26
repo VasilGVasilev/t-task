@@ -9,10 +9,10 @@ import { FaUserGroup } from "react-icons/fa6";
 import { IoPersonSharp } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 
-import { AllStationsVisualized, } from "../../utils/index";
-import { specificPolyline, routeName, stopsNameAndCrowding, specificStationName, } from "../../utils/arrays";
+import { specificPolyline, routeName, stopsNameAndCrowding, } from "../../utils/arrays";
 
 import { useSelector } from "react-redux";
+import { AllStationsVisualized } from "../../components/AllStationsVisualized";
 
 
 
@@ -99,7 +99,11 @@ const Line = () => {
                             positions={polylineCoords}
 
                         />
-                        {AllStationsVisualized(lineName, transportData, routeA ? 0 : 1)}
+                        <AllStationsVisualized
+                            lineName={lineName}
+                            currentRoute={routeA ? 0 : 1}
+                        >
+                        </AllStationsVisualized>
 
 
                         <TileLayer
