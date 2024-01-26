@@ -1,5 +1,5 @@
 import "leaflet/dist/leaflet.css"
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { MapContainer, Polyline, TileLayer } from 'react-leaflet'
 import { Link, useNavigate } from 'react-router-dom'
 import { specificPolyline } from "../../utils/arrays";
@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 
 
 
-const VisualizeLinesOnMap = (lineName, visibleLineBoolean, transportData, colors, handleLineOnMapClick) => {
+const VisualizeLinesOnMap = memo(function VisualizeLinesOnMap({ lineName, visibleLineBoolean, transportData, colors, handleLineOnMapClick }) {
 
     const routes = transportData.find(line => line.line == lineName).routes
     return (
@@ -47,9 +47,9 @@ const VisualizeLinesOnMap = (lineName, visibleLineBoolean, transportData, colors
         </>
 
     )
-}
+})
 
-const VisualizeLineOnList = (lineName, visibleLineBoolean, colors) => {
+const VisualizeLineOnList = memo(function VisualizeLineOnList({ lineName, visibleLineBoolean, colors }) {
     return (
         <>
             {
@@ -68,7 +68,7 @@ const VisualizeLineOnList = (lineName, visibleLineBoolean, colors) => {
             }
         </>
     )
-}
+})
 
 
 const Home = () => {
@@ -150,11 +150,15 @@ const Home = () => {
                             Object.keys(lineVisible).map((lineName) => {
                                 return (
 
-                                    <React.Fragment key={lineName}>
-                                        {
-                                            VisualizeLinesOnMap(lineName, lineVisible[lineName], transportData, colors, handleLineOnMapClick)
-                                        }
-                                    </React.Fragment>
+                                    <VisualizeLinesOnMap
+                                        key={lineName}
+                                        lineName={lineName}
+                                        visibleLineBoolean={lineVisible[lineName]}
+                                        transportData={transportData}
+                                        colors={colors}
+                                        handleLineOnMapClick={handleLineOnMapClick}
+                                    >
+                                    </VisualizeLinesOnMap>
                                 )
 
                             })
@@ -206,11 +210,13 @@ const Home = () => {
                             Object.keys(lineVisible).map((lineName) => {
                                 return (
 
-                                    <React.Fragment key={lineName}>
-                                        {
-                                            VisualizeLineOnList(lineName, lineVisible[lineName], colors)
-                                        }
-                                    </React.Fragment>
+                                    <VisualizeLineOnList
+                                        key={lineName}
+                                        lineName={lineName}
+                                        visibleLineBoolean={lineVisible[lineName]}
+                                        colors={colors}
+                                    >
+                                    </VisualizeLineOnList>
                                 )
 
                             })
