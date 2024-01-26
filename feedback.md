@@ -6,7 +6,7 @@ array with coords of polyfill, coords of stops, names of stops
 
 
 
-2. Not having normalized state, I had to at least optimise calulcations
+2. Not having normalized state, I had to at least [optimise calulcations](https://www.youtube.com/watch?v=tbBILjDgXb4)
 Namely, instead of calculating coords on each render of a component that needs coords by feeding it the function that makes the calculation, I should have cached the once calculated array.
 Entails having data extracted from state in a ready to use cache
 Solution: instead of traversing though the data with my functions that return an array with coords or names, apply useMemo() hook to extract this data in a ready to be used array. Instead I put the function that returns an array directly in the component that relied on the information, thus, making the calculations happen on each render, ex. clicking in between lines.
