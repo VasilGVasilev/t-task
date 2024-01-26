@@ -1,5 +1,5 @@
 import "leaflet/dist/leaflet.css"
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { MapContainer, Polyline, TileLayer } from "react-leaflet";
 
 import { CgArrowsExchangeAltV } from "react-icons/cg";
@@ -10,7 +10,7 @@ import { IoPersonSharp } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 
 import { AllStationsVisualized, } from "../../utils/index";
-import { specificPolyline, routeName, stopsNameAndCrowding, } from "../../utils/arrays";
+import { specificPolyline, routeName, stopsNameAndCrowding, specificStationName, } from "../../utils/arrays";
 
 import { useSelector } from "react-redux";
 
@@ -59,6 +59,15 @@ const Line = () => {
         setRouteA(!routeA)
     }
 
+    // if you put useMemo within condition of dataStatus =='succeded', it will be hooks anti-pattern (hooks are always top-level) 
+    const polylineCoords = useMemo(() => {
+        if (dataStatus === 'succeeded' && colorsStatus === 'succeeded') {
+            return specificPolyline(lineName, transportData, routeA ? 0 : 1);
+        }
+        return [];
+    }, [lineName, transportData, routeA, dataStatus, colorsStatus]);
+
+
 
     let content
 
@@ -87,7 +96,7 @@ const Line = () => {
 
                         <Polyline
                             pathOptions={{ color: colors[lineName], weight: 3 }}
-                            positions={specificPolyline(lineName, transportData, routeA ? 0 : 1)}
+                            positions={polylineCoords}
 
                         />
                         {AllStationsVisualized(lineName, transportData, routeA ? 0 : 1)}
