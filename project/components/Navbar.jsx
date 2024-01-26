@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import useMediaQuery from "../hooks/useMediaQuery";
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 
@@ -68,7 +67,6 @@ const Navbar = () => {
     const errorColors = useSelector(state => state.colors.error)
 
     const [isMenuToggled, setIsMenuToggled] = useState(false);
-    const isDesktop = useMediaQuery("(min-width: 1120px)");
 
     const modalRef = useRef(null);
 
