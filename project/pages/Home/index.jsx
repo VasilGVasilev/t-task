@@ -1,5 +1,5 @@
 import "leaflet/dist/leaflet.css"
-import React, { memo, useState } from "react";
+import React, { memo, useMemo, useState } from "react";
 import { MapContainer, Polyline, TileLayer } from 'react-leaflet'
 import { Link, useNavigate } from 'react-router-dom'
 import { specificPolyline } from "../../utils/arrays";
@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 const VisualizeLinesOnMap = memo(function VisualizeLinesOnMap({ lineName, visibleLineBoolean, transportData, colors, handleLineOnMapClick }) {
 
     const routes = transportData.find(line => line.line == lineName).routes
+    const memoizedPositions = useMemo(() => routes.map((element, currentRoute) => specificPolyline(lineName, transportData, currentRoute)), [lineName, transportData]);
     return (
 
         <>
@@ -23,17 +24,17 @@ const VisualizeLinesOnMap = memo(function VisualizeLinesOnMap({ lineName, visibl
                 &&
                 <>
                     {
-                        routes.map((element, currentRoute) => {
+                        memoizedPositions.map((coordinates, index) => {
                             return (
-                                <React.Fragment key={element.id}>
+                                <React.Fragment key={index}>
                                     <Polyline
                                         pathOptions={{ color: colors[lineName], weight: 3 }}
-                                        positions={specificPolyline(lineName, transportData, currentRoute)}
+                                        positions={coordinates}
                                         eventHandlers={{
                                             click: () => handleLineOnMapClick(lineName)
                                         }}
                                     />
-                                    {AllStationsVisualized(lineName, transportData, currentRoute)}
+                                    {AllStationsVisualized(lineName, transportData, index)}
 
                                 </React.Fragment>
                             )
