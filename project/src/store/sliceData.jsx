@@ -5,14 +5,18 @@ const initialState = {
   status: 'idle',
   error: null
 }
-
+export function fetchDataAPI() {
+  return new Promise((resolve) =>
+    setTimeout(() => resolve(import('../../../DB/data.json')), 500)
+  );
+}
 export const fetchData = createAsyncThunk('data/fetchData', async () => {
-  const response = await import('../../../DB/data.json')
+  const response = await fetchDataAPI()
   // .default, not .data  due to the DB being default export
   return response.default
 })
 
-export const counterSlice = createSlice({
+export const dataSlice = createSlice({
   name: 'data',
   initialState,
   reducers: {
@@ -37,4 +41,4 @@ export const counterSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 
-export default counterSlice.reducer
+export default dataSlice.reducer

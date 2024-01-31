@@ -5,15 +5,19 @@ const initialState = {
   status: 'idle',
   error: null
 }
-
+export function fetchDataAPI() {
+  return new Promise((resolve) =>
+    setTimeout(() => resolve(import('../../../DB/colorOptions.json')), 500)
+  );
+}
 export const fetchColors = createAsyncThunk('color/fetchColors', async () => {
-  const response = await import('../../../DB/colorOptions.json')
+  const response = await fetchDataAPI()
   // .default, not .data  due to the DB being default export
   return response.default
 })
 
 
-export const counterSlice = createSlice({
+export const colorsSlice = createSlice({
   name: 'colors',
   initialState,
   reducers: {
@@ -38,4 +42,4 @@ export const counterSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 
-export default counterSlice.reducer
+export default colorsSlice.reducer
